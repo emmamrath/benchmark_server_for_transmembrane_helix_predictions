@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+
+# python adjust_field2_seq_for_removed_blanks.py test1.fasta.split4 test1.leading_blanks_removed test1.fasta.split4.adjusted_for_removed_blanks
+
+# python adjust_field2_seq_for_removed_blanks.py [input-file] [input-file-2] [output-file]
+
+import sys
+import re
+
+
+# global variables
+save_id = []
+save_num_removed = []
+
+
+######################################################
+def find_num_removed( this_id ):
+	this_num_removed = -1
+	i = 0
+	for this_save_id in save_id:
+		if (this_save_id == this_id):
+			this_num_removed = save_num_removed[i]
+		i = i + 1
+	return this_num_removed
+
+######################################################
+def main():
+
+	global outfile
+	input_file_1 = sys.argv[1]
+	input_file_2 = sys.argv[2]
+	output_file_name = sys.argv[3]
+
+	infile2 = open( input_file_2, "r" )
+	inlines2 = infile2.readlines()
+	infile2.close()
+
+	for inline in inlines2:
+		inline = inline.strip()
+		if (inline != ''):
+			bits = inline.rsplit( ':::::' )
+			this_id = bits[0]
+			this_num_removed = bits[1]
+			save_id.append( this_id )
+			save_num_removed.append( this_num_removed )
+
+	infile1 = open( input_file_1, "r" )
+	inlines1 = infile1.readlines()
+	infile1.close()
+
+	outfile = open( output_file_name, "w" )
+
+	for inline in inlines1:
+		inline = inline.strip()
+		if (inline != ''):
+			bits = inline.rsplit( ':::::' )
+			this_id = bits[0]
+			this_seq = bits[1]
+			this_num_removed = find_num_removed( this_id )
+			this_num_removed = int(this_num_removed)
+			if (this_num_removed == -1):
+				print this_id, ': could not find a record for how many blanks were removed.'
+			else:
+				output_line = this_id + ':::::' + this_seq + ':::::' + "\r\n"
+				new_seq = ''
+				if (this_num_removed > 0):
+					if (this_seq == '-'):
+						new_seq = '-'
+					else:
+						for i in range( 0, this_num_removed ):
+							new_seq = new_seq + '_'
+						new_seq = new_seq + this_seq
+					if (new_seq == ''):
+						new_seq = '-'
+					output_line = this_id + ':::::' + new_seq + ':::::' + "\r\n"
+				outfile.write( output_line )
+	outfile.close()
+
+
+if __name__ == "__main__":
+	# Someone is launching this directly
+	main()
+

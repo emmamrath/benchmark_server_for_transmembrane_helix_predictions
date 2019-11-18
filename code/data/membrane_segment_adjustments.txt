@@ -1,0 +1,22 @@
+
+adjustments to OPM membrane segments :
+======================================
+
+Potassium channel : add half-membrane helix before selectivity filter (eg. TVGYG)
+	3ldc_A, 2a9h_A, 3f5w_C, 2wll_A, 3pjs_K
+Sodium channel : add half-membrane helix before selectivity filter (TLESW)
+	3rvy_A
+
+Aquaporin : add half-membrane helix after selectivity filter = NPA (and an R) (or NSPR? or NLA?). There are 2 per chain.
+	3ne2_A, 2zz9_A (2nd one)
+
+
+3mk7_A resi 330-338 is marked as a membrane segment. But it looks more like a membrane interface helix. So remove it.
+
+2o01_A:302-315		<--- seems to be a helix, not EEEEE or TTTTT
+3odu_A:241-264		<--- definitely a helix, not EEEEEE
+3qe7_A:65-71		<--- is beta strand, joined to beta strand 285-287, but these are so short - maybe 65-71 shouldn't be transmembrane segments in OPM (285-287 isn't).
+1grm_A:2-14		<--- seems to be a helix, not EEEEEE
+
+
+

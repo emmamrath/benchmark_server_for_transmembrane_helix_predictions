@@ -1,0 +1,3845 @@
+<html><head><title>BENCHMARK OF MEMBRANE HELIX PREDICTIONS FROM SEQUENCE</title>
+<style type="text/css">
+<!--
+body {
+	background-image: url("greenquollbg.gif");
+	background-position: right bottom;
+	background-repeat: no-repeat;
+}
+.basestyle {
+	color: #FFFFFF;
+	font-size: 14px;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+}
+body, td, p, input {
+	font-size: 14px;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	color: #333333;
+}
+.h1 {
+	font-size: 14px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+}
+.h2 {
+	font-size: 16px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	color: #333580;
+}
+.h2:link {
+	font-size: 16px;
+	font-weight: bold;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	color: #333580;
+}
+.h3 {
+	font-size: 16px;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	color: #333580;
+}
+.navlinks {
+	font-size: 14px;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.tt {
+	font-size: 12px;
+	font-family: courier, monospace;
+	color: #000000;
+}
+.smaller {
+	font-size: 10px;
+}
+.smaller_bold {
+	font-size: 10px;
+	font-weight: bold;
+}
+.blue {
+	color: #333580;
+}
+.blue_small {
+	color: #333580;
+	font-size: 12px;
+}
+.blue_smaller {
+	color: #333580;
+	font-size: 10px;
+}
+.blue_italic {
+	color: #333580;
+	font-style: italic;
+}
+.blue_italic_smaller {
+	color: #333580;
+	font-style: italic;
+	font-size: 10px;
+}
+.bold {
+	font-weight: bold;
+}
+.red_bold {
+	color: #db0c0c;
+	font-weight: bold;
+}
+-->
+</style>
+<script type = text/javascript>
+<!--
+
+function showhidediv(div_to_show, div_to_hide) {
+	var divshow = document.getElementById(div_to_show);
+	var divhide = document.getElementById(div_to_hide);
+	divshow.style.display = "block";
+	divhide.style.display = "none";
+}
+
+function clear_methods(oForm) {
+    
+  var elements = oForm.elements; 
+    
+  //oForm.reset();
+
+  for(i=0; i<elements.length; i++) {
+      
+	field_type = elements[i].type.toLowerCase();
+	
+	switch(field_type) {
+	
+		case "checkbox":
+  			if (elements[i].checked) {
+   				elements[i].checked = false; 
+			}
+			break;
+		default: 
+			break;
+	}
+
+	field_name = elements[i].name.toLowerCase();
+
+	switch(field_name) {
+
+		case "xray_diffraction":
+  			elements[i].checked = true; 
+			break;
+		case "solution_nmr":
+  			elements[i].checked = true; 
+			break;
+		default: 
+			break;
+	}
+    }
+}
+
+function select_methods(oForm) {
+    
+  var elements = oForm.elements; 
+    
+  //oForm.reset();
+
+  for(i=0; i<elements.length; i++) {
+      
+	field_type = elements[i].type.toLowerCase();
+	
+	switch(field_type) {
+	
+		case "checkbox":
+  			elements[i].checked = true; 
+			break;
+
+		default: 
+			break;
+	}
+
+	field_name = elements[i].name.toLowerCase();
+
+	switch(field_name) {
+
+		case "electron_crystallography":
+  			elements[i].checked = false; 
+			break;
+		case "electron_microscopy":
+  			elements[i].checked = false; 
+			break;
+		case "fiber_diffraction":
+  			elements[i].checked = false; 
+			break;
+		case "solid_state_nmr":
+  			elements[i].checked = false; 
+			break;
+		default: 
+			break;
+	}
+    }
+}
+
+function select_topology_methods(oForm) {
+    
+  var elements = oForm.elements; 
+    
+  //oForm.reset();
+
+  for(i=0; i<elements.length; i++) {
+      
+	field_name = elements[i].name.toLowerCase();
+	
+	switch(field_name) {
+
+		case "ensemble":
+  			elements[i].checked = true; 
+			break;
+		case "hmmtm":
+  			elements[i].checked = true; 
+			break;
+		case "hmmtop2":
+  			elements[i].checked = true; 
+			break;
+		case "hmmtop_topcons_single":
+  			elements[i].checked = true; 
+			break;
+		case "memsatsvm":
+  			elements[i].checked = true; 
+			break;
+		case "memsat3":
+  			elements[i].checked = true; 
+			break;
+		case "memsat_topcons_single":
+  			elements[i].checked = true; 
+			break;
+		case "octopus":
+  			elements[i].checked = true; 
+			break;
+		case "octopus_topcons":
+  			elements[i].checked = true; 
+			break;
+		case "phdthtm_pbil":
+  			elements[i].checked = true; 
+			break;
+		case "philius":
+  			elements[i].checked = true; 
+			break;
+		case "phobius":
+  			elements[i].checked = true; 
+			break;
+		case "polyphobius":
+  			elements[i].checked = true; 
+			break;
+		case "pro_topcons":
+  			elements[i].checked = true; 
+			break;
+		case "prodiv_topcons":
+  			elements[i].checked = true; 
+			break;
+		case "scampi":
+  			elements[i].checked = true; 
+			break;
+		case "scampi_msa_topcons":
+  			elements[i].checked = true; 
+			break;
+		case "scampi_seq_topcons":
+  			elements[i].checked = true; 
+			break;
+		case "scampi_seq_topcons_single":
+  			elements[i].checked = true; 
+			break;
+		case "svmtop":
+  			elements[i].checked = true; 
+			break;
+		case "tmhmm2":
+  			elements[i].checked = true; 
+			break;
+		case "stmhmm_topcons_single":
+  			elements[i].checked = true; 
+			break;
+		case "tmmod":
+  			elements[i].checked = true; 
+			break;
+		case "tmpred":
+  			elements[i].checked = true; 
+			break;
+		case "topcons":
+  			elements[i].checked = true; 
+			break;
+		case "topcons_single":
+  			elements[i].checked = true; 
+			break;
+		case "toppred2":
+  			elements[i].checked = true; 
+			break;
+		default: 
+			break;
+	}
+    }
+}
+
+function select_topography_only_methods(oForm) {
+    
+  var elements = oForm.elements; 
+    
+  //oForm.reset();
+
+  for(i=0; i<elements.length; i++) {
+      
+	field_name = elements[i].name.toLowerCase();
+	
+	switch(field_name) {
+	
+		case "dastmfilter":
+  			elements[i].checked = true; 
+			break;
+		case "das2002":
+  			elements[i].checked = true; 
+			break;
+		case "das1997_loose":
+  			elements[i].checked = true; 
+			break;
+		case "deltag":
+  			elements[i].checked = true; 
+			break;
+		case "das1997_strict":
+  			elements[i].checked = true; 
+			break;
+		case "minnou":
+  			elements[i].checked = true; 
+			break;
+		case "pepinfo_eisenberg_7_10":
+  			elements[i].checked = true; 
+			break;
+		case "pepinfo_eisenberg_11_10":
+			elements[i].checked = true; 
+			break;
+		case "pepinfo_eisenberg_19_10":
+			elements[i].checked = true; 
+			break;
+		case "pepinfo_kyte_7_10":
+  			elements[i].checked = true; 
+			break;
+		case "pepinfo_kyte_11_10":
+  			elements[i].checked = true; 
+			break;
+		case "pepinfo_kyte_19_10":
+  			elements[i].checked = true; 
+			break;
+		case "pepinfo_ohm_7_10":
+  			elements[i].checked = true; 
+			break;
+		case "pepinfo_ohm_11_10":
+  			elements[i].checked = true; 
+			break;
+		case "pepinfo_ohm_19_10":
+  			elements[i].checked = true; 
+			break;
+		case "membrain":
+  			elements[i].checked = true; 
+			break;
+		case "phdhtm_pbil":
+  			elements[i].checked = true; 
+			break;
+		case "predtmr":
+  			elements[i].checked = true; 
+			break;
+		case "sosui":
+  			elements[i].checked = true; 
+			break;
+		case "split4":
+  			elements[i].checked = true; 
+			break;
+		case "svmtm":
+  			elements[i].checked = true; 
+			break;
+		case "tmap":
+  			elements[i].checked = true; 
+			break;
+		case "valpred":
+  			elements[i].checked = true; 
+			break;
+		case "valpred2":
+  			elements[i].checked = true; 
+			break;
+		case "wavetm":
+  			elements[i].checked = true; 
+			break;
+		default: 
+			break;
+	}
+    }
+}
+
+-->
+</script>
+
+</head>
+
+<body onload="javascript:showhidediv('div_for_choose_standards_show','div_for_choose_standards');
+			javascript:showhidediv('div_for_more_dataset_options_show','div_for_more_dataset_options');
+			javascript:showhidediv('div_for_beta_barrel_show','div_for_beta_barrel');
+			javascript:showhidediv('div_for_soluble_show','div_for_soluble');
+			javascript:showhidediv('div_for_enter_seqs_show','div_for_enter_seqs');
+			javascript:showhidediv('div_for_upload_file_show','div_for_upload_file');
+			javascript:showhidediv('div_for_benchmark_criteria_show','div_for_benchmark_criteria');
+			javascript:showhidediv('div_for_key_to_benchmark_results_show','div_for_key_to_benchmark_results');
+			javascript:showhidediv('div_for_key_to_display_aligned_show','div_for_key_to_display_aligned');
+			javascript:showhidediv('div_for_benchmark_references_show','div_for_benchmark_references');
+			javascript:showhidediv('div_for_methods_benchmarked_show','div_for_methods_benchmarked')">
+
+<table width='100%' cellspacing='0' cellpadding='0' border='0'>
+	<tr>
+		<td align='left'>
+
+<table height='160' cellspacing='0' cellpadding='0' border='0' align='left' bgcolor='#a4a5e9'>
+	<tr>
+		<td height='160' valign='center'>
+			<table height='160' cellspacing='0' cellpadding='0' border='0'>
+				<tr>
+					<td width='20'></td>
+
+					<td width='740' valign='center'>
+						<font size='5' color='black'>BENCHMARK OF MEMBRANE HELIX PREDICTIONS FROM SEQUENCE <sup>1</sup></font>
+					</td>
+					<td width='240'>
+						<img src='bluegold.gif' width='240' height='160' border='0'>
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+</table>
+
+		</td>
+	</tr>
+	<tr>
+		<td align='left'>
+
+
+
+<br><br><br>
+
+<a name='msg'>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0 width=800>
+				<tr>
+					<td>
+
+<a name='intro'>
+<span class='h1'>INTRODUCTION :</span><br>
+<br>
+This benchmark server allows you to compare membrane helix prediction and topology prediction methods that have made their predictions based on amino acid sequence.<br>
+<br>
+If you want to compare methods :<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='h3'>1.&nbsp;&nbsp;&nbsp;<a href='#methods' class='h3'>Choose the methods you want to compare and&#47;or upload your own predictions</a><br></span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='h3'>2.&nbsp;&nbsp;&nbsp;<a href='#choose_dataset' class='h3'>Select the benchmark dataset (standard or personalized)</a><br></span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='h3'>3.&nbsp;&nbsp;&nbsp;<a href='#criteria' class='h3'>Specify the benchmark criteria</a><br></span>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class='h3'>4.&nbsp;&nbsp;&nbsp;<a href='#run' class='h3'>Press 'Execute'</a><br></span>
+<br>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+<form action='benchmark.pl' method='post' enctype='multipart/form-data'>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#c8c8ed'>
+	<tr>
+		<td align=left valign=top>
+			<table cellspacing=20 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td align=left valign=top bgcolor='#dddddd'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<a name='methods'>
+<span class='h2'>1.&nbsp;&nbsp;&nbsp;Choose the methods you want to compare and&#47;or upload your own predictions:</span>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+						<table cellspacing=10 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='das1997_loose' value='1'> DAS1997 (loose)</td>
+								<td align=left valign=top><input type='checkbox' name='memsat3' value='1' checked> MEMSAT3</td>
+								<td align=left valign=top><input type='checkbox' name='prodiv_topcons' value='1' checked> PRODIV-TMHMM (in TOPCONS)</td>
+								<td align=left valign=top><input type='checkbox' name='tmap' value='1'> TMAP</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_eisenberg_7_10' value='1'> Eisenberg (7,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='das1997_strict' value='1'> DAS1997 (strict)</td>
+								<td align=left valign=top><input type='checkbox' name='memsat_topcons_single' value='1'> MEMSAT (in TOPCONS-single)</td>
+								<td align=left valign=top><input type='checkbox' name='pro_topcons' value='1'> PRO-TMHMM (in TOPCONS)</td>
+								<td align=left valign=top><input type='checkbox' name='tmhmm2' value='1'> TMHMM2</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_eisenberg_11_10' value='1'> Eisenberg (11,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='das2002' value='1'> DAS2002</td>
+								<td align=left valign=top><input type='checkbox' name='minnou' value='1'> MINNOU</td>
+								<td align=left valign=top><input type='checkbox' name='scampi' value='1'> SCAMPI</td>
+								<td align=left valign=top><input type='checkbox' name='tmloop' value='1'> TMLOOP</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_eisenberg_19_10' value='1'> Eisenberg (19,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='dastmfilter' value='1'> DAS-TMfilter</td>
+								<td align=left valign=top><input type='checkbox' name='octopus' value='1' checked> OCTOPUS</td>
+								<td align=left valign=top><input type='checkbox' name='scampi_msa_topcons' value='1'> SCAMPI-multi (in TOPCONS)</td>
+								<td align=left valign=top><input type='checkbox' name='tmmod' value='1'> TMMOD</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_kyte_7_10' value='1'> Kyte-Doolittle (7,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='deltag' value='1'> deltaG</td>
+								<td align=left valign=top><input type='checkbox' name='octopus_topcons' value='1'> OCTOPUS (in TOPCONS)</td>
+								<td align=left valign=top><input type='checkbox' name='scampi_seq_topcons' value='1'> SCAMPI-sequence (in TOPCONS)</td>
+								<td align=left valign=top><input type='checkbox' name='tmpred' value='1'> TMPRED</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_kyte_11_10' value='1'> Kyte-Doolittle (11,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='ensemble' value='1'> ENSEMBLE (in MemPype)</td>
+								<td align=left valign=top><input type='checkbox' name='phdhtm_pbil' value='1'> PHDhtm (at PBIL)</td>
+								<td align=left valign=top><input type='checkbox' name='scampi_seq_topcons_single' value='1'> SCAMPI-sequence (in TOPCONS-single)</td>
+								<td align=left valign=top><input type='checkbox' name='topcons' value='1' checked> TOPCONS</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_kyte_19_10' value='1'> Kyte-Doolittle (19,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='hmmtm' value='1'> HMM-TM</td>
+								<td align=left valign=top><input type='checkbox' name='phdthtm_pbil' value='1'> PHDThtm (at PBIL)</td>
+								<td align=left valign=top><input type='checkbox' name='sosui' value='1'> SOSUI</td>
+								<td align=left valign=top><input type='checkbox' name='topcons_single' value='1'> TOPCONS-single</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_ohm_7_10' value='1'> OHM (7,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='hmmtop2' value='1'> HMMTOP2</td>
+								<td align=left valign=top><input type='checkbox' name='philius' value='1'> Philius</td>
+								<td align=left valign=top><input type='checkbox' name='split4' value='1'> SPLIT4</td>
+								<td align=left valign=top><input type='checkbox' name='toppred2' value='1'> TOPPRED2</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_ohm_11_10' value='1'> OHM (11,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='hmmtop_topcons_single' value='1'> HMMTOP (in TOPCONS-single)</td>
+								<td align=left valign=top><input type='checkbox' name='phobius' value='1'> Phobius</td>
+								<td align=left valign=top><input type='checkbox' name='stmhmm_topcons_single' value='1'> S-TMHMM (in TOPCONS-single)</td>
+								<td align=left valign=top><input type='checkbox' name='valpred' value='1'> VALPRED</td>
+								<td align=left valign=top><input type='checkbox' name='pepinfo_ohm_19_10' value='1'> OHM (19,10)</td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='membrain' value='1'> MemBrain</td>
+								<td align=left valign=top><input type='checkbox' name='polyphobius' value='1'> PolyPhobius</td>
+								<td align=left valign=top><input type='checkbox' name='svmtm' value='1'> SVMtm</td>
+								<td align=left valign=top><input type='checkbox' name='valpred2' value='1'> VALPRED2</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='memsatsvm' value='1' checked> MEMSAT-SVM</td>
+								<td align=left valign=top><input type='checkbox' name='predtmr' value='1'> PRED-TMR</td>
+								<td align=left valign=top><input type='checkbox' name='svmtop' value='1'> SVMtop</td>
+								<td align=left valign=top><input type='checkbox' name='wavetm' value='1'> waveTM</td>
+								<td></td>
+							</tr>
+						</table>
+
+						<div id='div_for_choose_standards_show'>
+						<table cellspacing=10 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top colspan=5>If displaying sequences and predictions aligned by residue, choose benchmark standards to display : <a href="javascript:showhidediv('div_for_choose_standards','div_for_choose_standards_show')">click to show</a></td>
+							</tr>
+						</table>
+						</div>
+						<div id='div_for_choose_standards'>
+						<table cellspacing=10 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top colspan=5>If displaying sequences and predictions aligned by residue, choose benchmark standards to display : <a href="javascript:showhidediv('div_for_choose_standards_show','div_for_choose_standards')">click to hide</a></td>
+							</tr>
+
+							<tr>
+								<td align=left valign=top><input type='checkbox' name='display_opm_adj' value='1' checked> OPM adjusted<br><input type='checkbox' name='display_opm_adj_topology' value='1'> <span class='smaller'>show benchmark topology</span></td>
+								<td align=left valign=top><input type='checkbox' name='display_opm' value='1'> OPM<br><input type='checkbox' name='display_opm_topology' value='1'> <span class='smaller'>show benchmark topology</span></td>
+								<td align=left valign=top><input type='checkbox' name='display_pdbtm' value='1'> PDBTM<br><input type='checkbox' name='display_pdbtm_topology' value='1'> <span class='smaller'>show assigned benchmark topology</span></td>
+								<td align=left valign=top colspan=2><input type='checkbox' name='display_dssp' value='1'> DSSP <span class='smaller'>(shows helices in 3D protein structures)</span><br>
+												 <input type='checkbox' name='display_stride' value='1'> STRIDE <span class='smaller'>(shows helices in 3D protein structures)</span></td>
+							</tr>
+						</table>
+						</div>
+
+						<table cellspacing=10 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top><input type="button" name="clear_meths" value="Select All Methods" onclick="select_methods(this.form);"></td>
+								<td align=left valign=top><input type="button" name="clear_meth" value="Clear All Methods" onclick="clear_methods(this.form);"></td>
+								<td align=left valign=top><input type="button" name="clear_meth" value="Select Topology Methods" onclick="select_topology_methods(this.form);"></td>
+								<td align=left valign=top><input type="button" name="clear_meth" value="Select Topography Only Methods" onclick="select_topography_only_methods(this.form);"></td>
+								<td align=left valign=top></td>
+							</tr>
+<!--							<tr><td colspan=5 height=10></td></tr>
+							<tr>
+								<td align=left valign=top><input type="button" name="clear_meths" value="Select All Methods" onclick="select_methods(this.form);"></td>
+								<td align=left valign=top><input type="button" name="clear_meths" value="Clear All Methods" onclick="clear_methods(this.form);"></td>
+								<td align=left valign=top><input type='checkbox' name='display_topology_files' value='1'> <span class='smaller'>show sequences for topology</span></td>
+								<td align=left valign=top><input type='checkbox' name='display_intermediate' value='1'> <span class='smaller'>temporary intermediate results</span></td>
+								<td align=left valign=top><input type='checkbox' name='dont_show_sequences' value='1'> <span class='smaller'>temporary don't display sequence</span></td>
+							</tr>
+-->
+						</table>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top bgcolor='#dddddd'>
+
+			<div id='div_for_upload_file_show'>
+			<table cellspacing=10 cellpadding=0 border=0 bgcolor='#dddddd'>
+				<tr>
+					<td align=left valign=top>
+
+<a name='upload'>
+<span class='h2'>If you have your own membrane helix prediction method that you would like to benchmark against other methods,&nbsp;&nbsp;&nbsp;<a href="javascript:showhidediv('div_for_upload_file','div_for_upload_file_show')">click to expand</a><br></span>
+
+					</td>
+				</tr>
+			</table>
+			</div>
+
+			<div id='div_for_upload_file'>
+			<table cellspacing=0 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+						<table cellspacing=10 cellpadding=0 border=0 bgcolor='#dddddd'>
+							<tr>
+								<td align=left valign=top>
+
+<a name='upload'>
+<span class='h2'>If you have your own membrane helix prediction method that you would like to benchmark against other methods,&nbsp;&nbsp;&nbsp;<a href="javascript:showhidediv('div_for_upload_file_show','div_for_upload_file')">click to close</a><br></span>
+
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td align=left valign=top>
+						<table cellspacing=10 cellpadding=0 border=0 bgcolor='#eeeeee'>
+							<tr>
+								<td align=left valign=top colspan=3>
+Your results will appear with the method name of YOU</span>
+<br>
+Upload a file containing your predictions :<br>
+<br>
+<input type='file' name='upload_file'><br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or<br>
+<br>
+Enter your predictions in this text box : <br>
+<textarea name='user_predictions' rows='10' cols='50'></textarea><br>
+								</td>
+								<td align=left valign=top width=30>
+								</td>
+								<td align=left valign=top>
+									<table cellspacing=0 cellpadding=0 border=0>
+										<tr>
+											<td align=left valign=top colspan=2>
+The sequences available for benchmarking were derived from 3D protein structure files (PDB files).<br>
+The sequence-id xxxx_Y stands for PDB-ID (xxxx) and chain (Y).<br>
+Please ensure that your predictions are in one of the following formats :<br>
+<br>
+<br>
+											</td>
+										</tr>
+										<tr>
+											<td align=left valign=top width=30>
+											<td align=left valign=top>
+<span class='blue_small'>>3din_E<br>
+ooooooooooMMMMMMMMMMMMMMMMMMMMiiiiiiiiiiiiiiiiiiiiiiMMMMMMMMMMMMMMMMMMMooooo<br>
+>3h8d_H<br>
+>3arc_K<br>
+ooooooooooooooooMMMMMMMMMMMMMMMMMMMMMMMMMMiiii<br></span>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or<br>
+<br>
+<span class='blue_small'>>3din_E<br>
+__________MMMMMMMMMMMMMMMMMMMM______________________MMMMMMMMMMMMMMMMMMM_____<br>
+>3h8d_H<br>
+>3arc_K<br>
+________________MMMMMMMMMMMMMMMMMMMMMMMMMM____<br></span>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or<br>
+<br>
+<span class='blue_small'>>3din_E<br>
+11-30,53-71<br>
+>3h8d_H<br>
+>3arc_K<br>
+17-42<br></span>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			</div>
+
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td align=left valign=top bgcolor='#dddddd'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<a name='choose_dataset'>
+<a name='choose_tmh'>
+<span class='h2'>2.&nbsp;&nbsp;&nbsp;Select the benchmark dataset (standard or personalized) :</span>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top>
+			<table cellspacing=10 cellpadding=0 border=0>
+
+				<tr>
+					<td align=left valign=top>
+						<span class='h1'>TRANSMEMBRANE HELIX (TMH) PROTEIN SEQUENCES :</span>
+					</td>
+				</tr>
+				<tr>
+					<td align=left valign=top>
+Similarity level : similarity &lt; 
+<select name='tmh_similarity_percent'>
+<option value='101'>=100&#37; (all sequences)
+<option value='20'>20&#37;
+<option value='25'>25&#37;
+<option value='30' selected>30&#37;
+<option value='35'>35&#37;
+<option value='40'>40&#37;
+<option value='45'>45&#37;
+<option value='50'>50&#37;
+<option value='55'>55&#37;
+<option value='60'>60&#37;
+<option value='65'>65&#37;
+<option value='70'>70&#37;
+<option value='75'>75&#37;
+<option value='80'>80&#37;
+<option value='85'>85&#37;
+<option value='90'>90&#37;
+<option value='95'>95&#37;
+<!--
+<option value='20_2'>20&#37; (alternate list)
+<option value='25_2'>25&#37; (alternate list)
+<option value='30_2'>30&#37; (alternate list)
+<option value='35_2'>35&#37; (alternate list)
+<option value='40_2'>40&#37; (alternate list)
+<option value='45_2'>45&#37; (alternate list)
+<option value='50_2'>50&#37; (alternate list)
+<option value='55_2'>55&#37; (alternate list)
+<option value='60_2'>60&#37; (alternate list)
+<option value='65_2'>65&#37; (alternate list)
+<option value='70_2'>70&#37; (alternate list)
+<option value='75_2'>75&#37; (alternate list)
+<option value='80_2'>80&#37; (alternate list)
+<option value='85_2'>85&#37; (alternate list)
+<option value='90_2'>90&#37; (alternate list)
+<option value='95_2'>95&#37; (alternate list)
+-->
+</select>
+					</td>
+				</tr>
+			</table>
+
+			<div id='div_for_more_dataset_options_show'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top><a href="javascript:showhidediv('div_for_more_dataset_options','div_for_more_dataset_options_show')">Click to show more options</a></td>
+				</tr>
+			</table>
+			</div>
+
+			<div id='div_for_more_dataset_options'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+							<table cellspacing=10 cellpadding=0 border=0>
+								<tr>
+									<td align=left valign=top width=200>
+										<a href="javascript:showhidediv('div_for_more_dataset_options_show','div_for_more_dataset_options')">Click to hide options</a></td>
+									</td>
+									<td align=left valign=top>
+										<span class='blue_small'>If you choose options below such as kingdom, family, or number or type of helices,<br>
+										you probably want to also set the similarity to 100&#37; so as not to restrict your chosen sequences by similarity.</span>
+									</td>
+								</tr>
+							</table>
+					</td>
+				</tr>
+				<tr>
+					<td align=left valign=top>
+
+<table cellspacing=10 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top>
+as measured by :<br>
+<select name='tmh_water_needle'>
+<option value='needle' selected>EMBOSS 'needle' (global sequence alignment)
+<option value='water'>EMBOSS 'water' (local sequence alignment)
+</select><br>
+<br>
+with similarity measured by :<br>
+<select name='tmh_similarity_identity'>
+<option value='similarity' selected>'similarity' (similar residues are matched)
+<option value='identity'>'identity' (only identical residues are matched)
+</select><br>
+<br>
+<br>
+<br>
+<br>
+<span class='smaller'>The use of EMBOSS 'water' (local sequence alignment) is more conservative<br>than EMBOSS 'needle' (global sequence alignment) in determining<br>
+how dissimilar 2 sequences are because proteins having similar conserved domains<br>inside dissimilar sequences will be judged as having higher similarity<br>
+by EMBOSS 'water' than by EMBOSS 'needle'.</span><br>
+		</td>
+		<td width=20></td>
+		<td align=left valign=top>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+						<nobr>Kingdom :</nobr><br>
+						<nobr><input type='radio' name='tmh_kingdom' value='all' checked> all</nobr><br>
+						<nobr><input type='radio' name='tmh_kingdom' value='eukaryote'> eukaryotes only</nobr><br>
+						<nobr><input type='radio' name='tmh_kingdom' value='bacteria'> bacteria only</nobr><br>
+						<nobr><input type='radio' name='tmh_kingdom' value='archaea'> archaea only</nobr><br>
+						<nobr><input type='radio' name='tmh_kingdom' value='viruses'> viruses only</nobr><br>
+						<nobr><input type='radio' name='tmh_kingdom' value='none'> none (don't test any TMH sequences)</nobr><br>
+					</td>
+					<td align=left valign=top>
+						<nobr>Number of TMH :</nobr><br>
+						<nobr><input type='radio' name='tmh_numTMH' value='polytopic_bitopic' checked> all</nobr><br>
+						<nobr><input type='radio' name='tmh_numTMH' value='polytopic'> polytopic only</nobr><br>
+						<nobr><input type='radio' name='tmh_numTMH' value='bitopic'> bitopic only</nobr><br>
+					</td>
+					<td align=left valign=top>
+						Type of membrane helices - only sequences having :<br>
+						<input type='radio' name='helix_type' value='all' checked> all<br>
+						<input type='radio' name='helix_type' value='nohalfmembrane'> transmembrane helices only,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no half-membrane helices or helical reentrant loops<br>
+						<input type='radio' name='helix_type' value='halfmembrane'> one or more half-membrane helices or helical reentrant loops<br>
+					</td>
+				</tr>
+				<tr>
+					<td align=left valign=top colspan=3>
+						<br>
+						Membrane protein structure family : <span class='smaller'>(as in Membrane Proteins of Known 3D Stucture database<sup>10</sup>)</span><br>
+						<select name='tmh_family'>
+						<option value='mpstruc__all' selected>all
+						<option value='mpstruc__ATP Binding Cassette (ABC) Transporters'>ATP Binding Cassette (ABC) Transporters
+						<option value='mpstruc__Adventitious Membrane Proteins: Alpha-helical Pore-forming Toxins'>Adventitious Membrane Proteins: Alpha-helical Pore-forming Toxins
+						<option value='mpstruc__Amino Acid Secondary Transporters'>Amino Acid Secondary Transporters
+						<option value='mpstruc__Amino Acid/Polyamine/Organocation (APC) Superfamily'>Amino Acid/Polyamine/Organocation (APC) Superfamily
+						<option value='mpstruc__Antiporters'>Antiporters
+						<option value='mpstruc__Apical Sodium-Dependent Bile Acid Transporters (ASBT)'>Apical Sodium-Dependent Bile Acid Transporters (ASBT)
+						<option value='mpstruc__Autonomously Folding "Membrane Proteins" (Sec-independent)'>Autonomously Folding "Membrane Proteins" (Sec-independent)
+						<option value='mpstruc__Bacterial Mercury Detoxification Proteins'>Bacterial Mercury Detoxification Proteins
+						<option value='mpstruc__Bacterial and Algal Rhodopsins'>Bacterial and Algal Rhodopsins
+						<option value='mpstruc__Betaine/Choline/Carnitine Transporter (BCCT) Family'>Betaine/Choline/Carnitine Transporter (BCCT) Family
+						<option value='mpstruc__Cation Diffusion Facilitator (CDF) Family'>Cation Diffusion Facilitator (CDF) Family
+						<option value='mpstruc__Channels: Formate Nitrate Transporter (FNT) Family'>Channels: Formate Nitrate Transporter (FNT) Family
+						<option value='mpstruc__Channels: Amt/Rh proteins'>Channels: Amt/Rh proteins
+						<option value='mpstruc__Channels: Aquaporins and Glyceroporins'>Channels: Aquaporins and Glyceroporins
+						<option value='mpstruc__Channels: Gap Junctions'>Channels: Gap Junctions
+						<option value='mpstruc__Channels: Potassium and Sodium Ion-Selective'>Channels: Potassium and Sodium Ion-Selective
+						<option value='mpstruc__Channels: Urea Transporters'>Channels: Urea Transporters
+						<option value='mpstruc__Channels: Other Ion Channels'>Channels: Other Ion Channels
+						<option value='mpstruc__CorA Superfamily Ion Transporters'>CorA Superfamily Ion Transporters
+						<option value='mpstruc__Cys-Loop Receptor Family'>Cys-Loop Receptor Family
+						<option value='mpstruc__Electron Transport Chain Complexes: Complex I'>Electron Transport Chain Complexes: Complex I
+						<option value='mpstruc__Electron Transport Chain Complexes: Complex II'>Electron Transport Chain Complexes: Complex II
+						<option value='mpstruc__Electron Transport Chain Complexes: Complex III (Cytochrome bc1)'>Electron Transport Chain Complexes: Complex III (Cytochrome bc1)
+						<option value='mpstruc__Electron Transport Chain Complexes: Complex IV (Cytochrome C Oxidase)'>Electron Transport Chain Complexes: Complex IV (Cytochrome C Oxidase)
+						<option value='mpstruc__Electron Transport Chain Complexes: Cytochrome b6f of Oxygenic Photosynthesis'>Electron Transport Chain Complexes: Cytochrome b6f of Oxygenic Photosynthesis
+						<option value='mpstruc__Energy-Coupling Factor (ECF) Transporters'>Energy-Coupling Factor (ECF) Transporters
+						<option value='mpstruc__F-type ATPase'>F-type ATPase
+						<option value='mpstruc__G Protein-Coupled Receptors (GPCRs)'>G Protein-Coupled Receptors (GPCRs)
+						<option value='mpstruc__Glycoproteins'>Glycoproteins
+						<option value='mpstruc__H+/Cl-Exchange Transporters'>H+/Cl-Exchange Transporters
+						<option value='mpstruc__Histidine Kinase Receptors'>Histidine Kinase Receptors
+						<option value='mpstruc__Hydrolases'>Hydrolases
+						<option value='mpstruc__Immune Receptors'>Immune Receptors
+						<option value='mpstruc__Integrin Adhesion Receptors'>Integrin Adhesion Receptors
+						<option value='mpstruc__Intramembrane Proteases'>Intramembrane Proteases
+						<option value='mpstruc__Light-Harvesting Complexes'>Light-Harvesting Complexes
+						<option value='mpstruc__Major Facilitator Superfamily (MFS) Transporters'>Major Facilitator Superfamily (MFS) Transporters
+						<option value='mpstruc__Membrane-Associated Proteins in Eicosanoid and Glutathione Metabolism (MAPEG)'>Membrane-Associated Proteins in Eicosanoid and Glutathione Metabolism (MAPEG)
+						<option value='mpstruc__Membrane-Bound Metalloproteases'>Membrane-Bound Metalloproteases
+						<option value='mpstruc__Methyltransferases'>Methyltransferases
+						<option value='mpstruc__Mo/Wbis-MGD Oxidoreductases'>Mo/Wbis-MGD Oxidoreductases
+						<option value='mpstruc__Multi-Drug Efflux Transporters'>Multi-Drug Efflux Transporters
+						<option value='mpstruc__Nitric Oxide Reductases'>Nitric Oxide Reductases
+						<option value='mpstruc__Nucleobase-Cation-Symport-1 (NCS1) Family'>Nucleobase-Cation-Symport-1 (NCS1) Family
+						<option value='mpstruc__Nucleobase-Cation-Symport-2 (NCS2) Family'>Nucleobase-Cation-Symport-2 (NCS2) Family
+						<option value='mpstruc__Oligosaccharyltransferases (OST)'>Oligosaccharyltransferases (OST)
+						<option value='mpstruc__Outer Membrane Proteins'>Outer Membrane Proteins
+						<option value='mpstruc__Oxidoreductases'>Oxidoreductases
+						<option value='mpstruc__Oxygenases'>Oxygenases
+						<option value='mpstruc__P-type ATPase'>P-type ATPase
+						<option value='mpstruc__Phosphoenolpyruvate-Dependent Phosphotransferases (PTSs)'>Phosphoenolpyruvate-Dependent Phosphotransferases (PTSs)
+						<option value='mpstruc__Phosphotransferases'>Phosphotransferases
+						<option value='mpstruc__Photosynthetic Reaction Centers'>Photosynthetic Reaction Centers
+						<option value='mpstruc__Photosystems'>Photosystems
+						<option value='mpstruc__SNARE Protein Family'>SNARE Protein Family
+						<option value='mpstruc__Sec Proteins'>Sec Proteins
+						<option value='mpstruc__Solute Sodium Symporter (SSS) Family'>Solute Sodium Symporter (SSS) Family
+						<option value='mpstruc__Squalene-Hopene Cyclases'>Squalene-Hopene Cyclases
+						<option value='mpstruc__Superfamily of K+ Transporters (SKT proteins)'>Superfamily of K+ Transporters (SKT proteins)
+						<option value='mpstruc__V-type ATPase'>V-type ATPase
+						<option value='mpstruc__Other'>Other
+						</select><br>
+					</td>
+				</tr>
+				<tr>
+					<td align=left valign=top colspan=3>
+						<br>
+						<table cellspacing=0 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top>
+									Restrict to sequences from 3D structures of following year onwards :<br>
+									not having any homologues prior to this year.<br>
+									<span class='smaller'>Similarity level of &lt; 30&#37; identity in PDB BLAST with E-value &lt; 0.005.<br><br></span>
+								</td>
+								<td width=20></td>
+								<td align=left valign=top>
+									<select name='restrict_year'>
+									<option value='none' selected>no restriction
+									<option value='1993'>1993
+									<option value='1994'>1994
+									<option value='1995'>1995
+									<option value='1996'>1996
+									<option value='1997'>1997
+									<option value='1998'>1998
+									<option value='1999'>1999
+									<option value='2000'>2000
+									<option value='2001'>2001
+									<option value='2002'>2002
+									<option value='2003'>2003
+									<option value='2004'>2004
+									<option value='2005'>2005
+									<option value='2006'>2006
+									<option value='2007'>2007
+									<option value='2008'>2008
+									<option value='2009'>2009
+									<option value='2010'>2010
+									<option value='2011'>2011
+								</td>
+							</tr>
+							<tr>
+								<td align=left valign=top colspan=3>
+									To perform a blind test using post-2008 data that would not have been used to train most of the prediction methods<br>
+									choose year 2009.
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td align=left valign=top>
+
+<a name='choose_resolution'>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top>
+<span class='h1'>Choose resolution and experimental method of benchmark data :</span><br>
+<br><br>
+Limit benchmark data to models having resolution <input type='text' name='restrict_resolution' size=3 value='3.5'> &Aring; or less.<br>
+		</td>
+		<td width=50></td>
+		<td align=left valign=top>
+<input type='checkbox' name='xray_diffraction' value='1' checked> X-RAY DIFFRACTION<br>
+<input type='checkbox' name='solution_nmr' value='1' checked> SOLUTION NMR<br>
+<input type='checkbox' name='electron_crystallography' value='1'> ELECTRON CRYSTALLOGRAPHY<br>
+<input type='checkbox' name='electron_microscopy' value='1'> ELECTRON MICROSCOPY<br>
+<input type='checkbox' name='fiber_diffraction' value='1'> FIBER DIFFRACTION<br>
+<input type='checkbox' name='solid_state_nmr' value='1'> SOLID-STATE NMR<br>
+<br>
+		</td>
+	</tr>
+</table>
+					</td>
+				</tr>
+			</table>
+			</div>
+
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top bgcolor='#dddddd'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<a name='choose_nontmh'>
+<span class='h2'>Test for false positives - choose non-transmembrane helix sequences for this benchmark :</span>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top>
+
+			<div id='div_for_beta_barrel_show'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+						<table cellspacing=10 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top colspan=5>
+									<span class='h1'>MEMBRANE BETA-BARREL PROTEIN SEQUENCES :</span> <a href="javascript:showhidediv('div_for_beta_barrel','div_for_beta_barrel_show')">click to show options</a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			</div>
+
+			<div id='div_for_beta_barrel'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+						<table cellspacing=10 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top colspan=5>
+									<span class='h1'>MEMBRANE BETA-BARREL PROTEIN SEQUENCES :</span> <a href="javascript:showhidediv('div_for_beta_barrel_show','div_for_beta_barrel')">click to hide options</a>
+								</td>
+							</tr>
+							<tr>
+								<td align=left valign=top>
+									<nobr>Kingdom :</nobr><br>
+									<nobr><input type='radio' name='bb_kingdom' value='all'> all</nobr><br>
+									<nobr><input type='radio' name='bb_kingdom' value='eukaryote'> eukaryotes only</nobr><br>
+									<nobr><input type='radio' name='bb_kingdom' value='bacteria'> bacteria only</nobr><br>
+									<nobr><input type='radio' name='bb_kingdom' value='archaea'> archaea only</nobr><br>
+									<nobr><input type='radio' name='bb_kingdom' value='viruses'> viruses only</nobr><br>
+									<nobr><input type='radio' name='bb_kingdom' value='none' checked> none (don't test any membrane beta-barrel sequences)</nobr><br>
+								</td>
+								<td width=20></td>
+								<td align=left valign=top>
+									<br>
+									Similarity level : similarity &lt; 
+									<select name='bb_similarity_percent'>
+									<option value='101'>=100&#37; (all sequences)
+									<option value='20'>20&#37;
+									<option value='25'>25&#37;
+									<option value='30' selected>30&#37;
+									<option value='35'>35&#37;
+									<option value='40'>40&#37;
+									<option value='45'>45&#37;
+									<option value='50'>50&#37;
+									<option value='55'>55&#37;
+									<option value='60'>60&#37;
+									<option value='65'>65&#37;
+									<option value='70'>70&#37;
+									<option value='75'>75&#37;
+									<option value='80'>80&#37;
+									<option value='85'>85&#37;
+									<option value='90'>90&#37;
+									<option value='95'>95&#37;
+									</select><br>
+									<br>
+									as measured by :<br>
+									<select name='bb_water_needle'>
+									<option value='needle' selected>EMBOSS 'needle' (global sequence alignment)
+									<option value='water'>EMBOSS 'water' (local sequence alignment)
+									</select><br>
+									<br>
+									with similarity measured by :<br>
+									<select name='bb_similarity_identity'>
+									<option value='similarity' selected>'similarity' (similar residues are matched)
+									<option value='identity'>'identity' (only identical residues are matched)
+									</select><br>
+								</td>
+							</tr>
+						</table>
+
+					</td>
+				</tr>
+			</table>
+			</div>
+
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top>
+
+			<div id='div_for_soluble_show'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+						<table cellspacing=10 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top colspan=3>
+									<span class='h1'>SOLUBLE PROTEIN SEQUENCES :</span> <a href="javascript:showhidediv('div_for_soluble','div_for_soluble_show')">click to show options</a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			</div>
+
+			<div id='div_for_soluble'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+						<table cellspacing=10 cellpadding=0 border=0>
+							<tr>
+								<td align=left valign=top colspan=3>
+									<span class='h1'>SOLUBLE PROTEIN SEQUENCES :</span> <a href="javascript:showhidediv('div_for_soluble_show','div_for_soluble')">click to hide options</a>
+								</td>
+							</tr>
+							<tr>
+								<td align=left valign=top>
+									<nobr>Kingdom :</nobr><br>
+									<nobr><input type='radio' name='soluble_kingdom' value='all'> all</nobr><br>
+									<nobr><input type='radio' name='soluble_kingdom' value='eukaryote'> eukaryotes only</nobr><br>
+									<nobr><input type='radio' name='soluble_kingdom' value='bacteria'> bacteria only</nobr><br>
+									<nobr><input type='radio' name='soluble_kingdom' value='archaea'> archaea only</nobr><br>
+									<nobr><input type='radio' name='soluble_kingdom' value='viruses'> viruses only</nobr> (include membrane targeting peptides)<br>
+									<nobr><input type='radio' name='soluble_kingdom' value='none' checked> none (don't test any membrane soluble protein sequences)</nobr><br>
+								</td>
+								<td width=20></td>
+								<td align=left valign=top>
+									Number of soluble sequences to include : <input type='text' name='num_soluble' size=3 value='all'> (or enter a number)
+								</td>
+							</tr>
+						</table>
+<br>
+<span class='smaller'>The soluble protein sequences are not similar to each other.
+They were chosen from PDBselect25<sup>14</sup> (&lt; 25&#37; similarity), culled by psi-cd-hit<sup>19</sup> to &lt; 1&#37; similarity, divided into kingdoms,<br>
+and the top 10&#37; of sequences least similar (by blastall<sup>20</sup>) to the transmembrane helix (TMH) sequences above were retained and have 17&#37; to 27&#37; identity to the TMH sequences.</span><br>
+					</td>
+				</tr>
+			</table>
+			</div>
+
+		</td>
+	</tr>
+
+	<tr>
+		<td align=left valign=top bgcolor='#dddddd'>
+			<a name='choose_manual_seqs'>
+
+			<div id='div_for_enter_seqs_show'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<span class='h2'>Or enter the list of sequences for this benchmark run :</span> <a href="javascript:showhidediv('div_for_enter_seqs','div_for_enter_seqs_show')">click to show options</a>
+
+					</td>
+				</tr>
+			</table>
+			</div>
+
+			<div id='div_for_enter_seqs'>
+			<table cellspacing=10 cellpadding=0 border=0 bgcolor='#dddddd'>
+				<tr>
+					<td align=left valign=top>
+
+<span class='h2'>Enter the list of sequences for this benchmark run :</span> <a href="javascript:showhidediv('div_for_enter_seqs_show','div_for_enter_seqs')">click to hide options</a>
+
+					</td>
+				</tr>
+			</table>
+			<table cellspacing=10 cellpadding=0 border=0 bgcolor='#eeeeee'>
+				<tr>
+					<td align=left valign=top>
+
+<textarea name='manual_list_seqs' rows='5' cols='50'></textarea><br>
+<br>
+Enter one line per sequence, in the format nnnn_X, where nnnn is the PDB-ID, and X is the chain identifier, eg. 2wll_A<br>
+Make sure the sequence ids exist in the benchmark database.<br>
+(You can see all valid sequence ids by setting transmembrane helix similarity to 100&#37; and clicking the 'list sequence IDs' option next to the 'Execute' button below.)<br>
+
+					</td>
+				</tr>
+			</table>
+			</div>
+
+		</td>
+	</tr>
+
+</table>
+
+<br><br>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td align=left valign=top bgcolor='#dddddd'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<a name='criteria'>
+<a name='standard'>
+<span class='h2'>3.&nbsp;&nbsp;&nbsp;Specify the benchmark criteria :</span>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top colspan=2>
+<span class='h1'>Choose the benchmark standard :</span><br>
+<br>
+		</td>
+		<td width=10></td>
+		<td></td>
+	</tr>
+</table>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=bottom>
+<input type='radio' name='benchmark_standard' value='opm_adj' checked> OPM adjusted membrane helices
+		</td>
+		<td></td>
+		<td align=left valign=bottom>
+<span class='blue'>&nbsp;&nbsp;&nbsp;for benchmarking transmembrane helices and all membrane reentrant loop helices</span>
+		</td>
+	</tr>
+	<tr><td colspan=4 height=6></td></tr>
+</table>
+
+<div id='div_for_benchmark_criteria_show'>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top>
+<br><a href="javascript:showhidediv('div_for_benchmark_criteria','div_for_benchmark_criteria_show')">click for more criteria</a>
+		</td>
+	</tr>
+	<tr><td height=6></td></tr>
+</table>
+</div>
+
+<div id='div_for_benchmark_criteria'>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td></td>
+		<td align=left valign=top colspan=3>
+<span class='smaller'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(includes all membrane helices that do and don't completely traverse the membrane;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;visual model comparison with proteins of the same family was carried out to assign short helical membrane segments as being membrane helices;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;membrane position relative to each protein is as defined in OPM)</span>
+		</td>
+	</tr>
+	<tr><td colspan=4 height=12></td></tr>
+	<tr>
+		<td></td>
+		<td align=left valign=bottom>
+<input type='radio' name='benchmark_standard' value='opm'> OPM membrane helices<sup>6,7</sup>
+		</td>
+		<td></td>
+		<td align=left valign=bottom>
+<span class='blue'>&nbsp;&nbsp;&nbsp;for benchmarking transmembrane helices and some membrane reentrant loop helices longer than a minimum length</span>
+		</td>
+	</tr>
+	<tr><td colspan=4 height=6></td></tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top colspan=3>
+<span class='smaller'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(includes membrane helices that do and some that don't completely traverse the membrane;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whether a short helical membrane segment is classified in OPM as a membrane helix depends on length of helix and depth into membrane;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;membrane position relative to each protein is as defined in OPM)</span>
+		</td>
+	</tr>
+	<tr><td colspan=4 height=12></td></tr>
+	<tr>
+		<td></td>
+		<td align=left valign=bottom>
+<input type='radio' name='benchmark_standard' value='pdbtm_helices_loops'> PDBTM membrane helices and loops<sup>8,9</sup>
+		</td>
+		<td></td>
+		<td align=left valign=bottom>
+<span class='blue'>&nbsp;&nbsp;&nbsp;for benchmarking transmembrane helices and all membrane reentrant loop helices and their associated non-helical coil</span>
+		</td>
+	</tr>
+	<tr><td colspan=4 height=6></td></tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top colspan=3>
+<span class='smaller'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(includes membrane helices that do and don't completely traverse the membrane, and their associated membrane coil forming reentrant hairpin-like loop;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;membrane coil and short helical membrane segments are classified here as a membrane loop if they are part of a reentrant loop leaving the PDBTM-defined membrane on the same side they entered;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;membrane position relative to each protein is as defined in PDBTM)</span>
+		</td>
+	</tr>
+	<tr><td colspan=4 height=12></td></tr>
+	<tr>
+		<td></td>
+		<td align=left valign=bottom>
+<input type='radio' name='benchmark_standard' value='pdbtm_helices'> PDBTM membrane helices<sup>8,9</sup>
+		</td>
+		<td></td>
+		<td align=left valign=bottom>
+<span class='blue'>&nbsp;&nbsp;&nbsp;for benchmarking transmembrane helices and not any membrane helices belonging to reentrant loops</span>
+		</td>
+	</tr>
+	<tr><td colspan=4 height=6></td></tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top colspan=3>
+<span class='smaller'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(includes membrane helices that do traverse the membrane, and excludes those that don't completely traverse the membrane;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;membrane position relative to each protein is as defined in PDBTM)</span><br> 
+		</td>
+	</tr>
+</table>
+<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top colspan=2>
+<span class='h1'>Adjust the benchmark parameters :</span><br><br>
+		</td>
+	</tr>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top>
+			<table cellspacing=5 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>Minimum length of observed and predicted helices (smaller helices are ignored)</td>
+					<td align=left valign=top>&nbsp;:&nbsp;</td>
+					<td align=left valign=top><input type='text' name='minimum_helix_length' size=3 value='9'></td>
+				</tr>
+				<tr>
+					<td align=left valign=top>Minimum overlap of observed helix residues for a helix prediction to score in the<br>
+								per-sequence-accuracy, per-segment-accuracy and average-helix-boundary-difference scores</td>
+					<td align=left valign=center>&nbsp;:&nbsp;</td>
+					<td align=left valign=center><input type='text' name='minimum_overlap' size=3 value='5'></td>
+				</tr>
+				<tr>
+					<td align=left valign=top>Maximum distance in residues to include in the membrane-helix-boundary scores</td>
+					<td align=left valign=top>&nbsp;:&nbsp;</td>
+					<td align=left valign=top><input type='text' name='max_dist_approx_ends' size=3 value='5'></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top>
+			<table cellspacing=0 cellpadding=0 border=0>
+				<tr><td height=10 colspan=7></td></tr>
+				<tr>
+					<td align=left valign=top>
+<br>Sort by benchmark results on :
+					</td>
+					<td width=30></td>
+					<td align=left valign=bottom>
+<select name='sort_by'>
+<option value='qok'>--topography, per protein--
+<option value='qok' selected>Qok&#37;
+<option value='qok'>
+<option value='qhtm_obs'>--topography, per segment--
+<option value='qhtm_obs'>Qhtm &#37;obs (sensitivity)
+<option value='qhtm_prd'>Qhtm &#37;prd (specificity)
+<option value='qhtm_obs'>
+<option value='avhe_diff'>--topography, per helix boundary--
+<option value='avhe_diff'>AvHb diff
+<option value='qhe_obs'>QHb &#37;obs
+<option value='qnhe_obs'>Gauss QHb &#37;obs
+<option value='avhe_diff'>
+<option value='q2'>--topography, per residue--
+<option value='q2'>Q2&#37;
+<option value='htmmcc'>htm MCC
+<option value='q2t_obs'>Q2T &#37;obs
+<option value='q2t_prd'>Q2T &#37;prd
+<option value='q2n_obs'>Q2N &#37;obs
+<option value='q2n_prd'>Q2N &#37;prd
+<option value='q2'>
+<option value='qok3'>--topology, per sequence--
+<option value='qok3'>Qok3&#37;
+<option value='nterm'>Nterm&#37;
+<option value='qok3'>
+<option value='q2_ioseg'>--topology, per segment--
+<option value='q2_ioseg'>ioSeg Q2&#37;
+<option value='qiom_obs'>Qiom &#37;obs
+<option value='qio_obs'>Qio &#37;obs
+<option value='q2_ioseg'>
+<option value='q3'>--topology, per residue--
+<option value='q3'>Q3&#37;
+<option value='q2_iores'>ioRes Q2&#37;
+<option value='iomcc'>io MCC
+<option value='q3'>
+<option value='alphabet'>Method Name
+<option value='q3'>
+<option value='none'>--please select one--
+</select><br>
+					</td>
+				</tr>
+				<tr><td height=20 colspan=7></td></tr>
+				<tr>
+					<td align=left valign=top>
+<br>Graph the benchmark results for :
+					</td>
+					<td></td>
+					<td align=left valign=bottom>
+<select name='graph_by'>
+<option value='qok'>--topography, per protein--
+<option value='qok' selected>Qok&#37;
+<option value='qok'>
+<option value='qhtm_obs'>--topography, per segment--
+<option value='qhtm_obs'>Qhtm &#37;obs (sensitivity)
+<option value='qhtm_prd'>Qhtm &#37;prd (specificity)
+<option value='qhtm_obs'>
+<option value='avhe_diff'>--topography, per helix boundary--
+<option value='avhe_diff'>AvHb diff
+<option value='qhe_obs'>QHb &#37;obs
+<option value='qnhe_obs'>Gauss QHb &#37;obs
+<option value='avhe_diff'>
+<option value='q2'>--topography, per residue--
+<option value='q2'>Q2&#37;
+<option value='htmmcc'>htm MCC
+<option value='q2t_obs'>Q2T &#37;obs
+<option value='q2t_prd'>Q2T &#37;prd
+<option value='q2n_obs'>Q2N &#37;obs
+<option value='q2n_prd'>Q2N &#37;prd
+<option value='q2'>
+<option value='qok3'>--topology, per sequence--
+<option value='qok3'>Qok3&#37;
+<option value='nterm'>Nterm&#37;
+<option value='qok3'>
+<option value='q2_ioseg'>--topology, per segment--
+<option value='q2_ioseg'>ioSeg Q2&#37;
+<option value='qiom_obs'>Qiom &#37;obs
+<option value='qio_obs'>Qio &#37;obs
+<option value='q2_ioseg'>
+<option value='q3'>--topology, per residue--
+<option value='q3'>Q3&#37;
+<option value='q2_iores'>ioRes Q2&#37;
+<option value='iomcc'>io MCC
+<option value='q3'>
+<option value='alphabet'>Method Name
+<option value='q3'>
+<option value='none'>--please select one--
+</select><br><br>
+					</td>
+					<td width=30></td>
+					<td align=left valign=bottom>
+<select name='graph_by_2'>
+<option value='qok'>--topography, per protein--
+<option value='qok'>Qok&#37;
+<option value='qok'>
+<option value='qhtm_obs'>--topography, per segment--
+<option value='qhtm_obs' selected>Qhtm &#37;obs (sensitivity)
+<option value='qhtm_prd'>Qhtm &#37;prd (specificity)
+<option value='qhtm_obs'>
+<option value='avhe_diff'>--topography, per helix boundary--
+<option value='avhe_diff'>AvHb diff
+<option value='qhe_obs'>QHb &#37;obs
+<option value='qnhe_obs'>Gauss QHb &#37;obs
+<option value='avhe_diff'>
+<option value='q2'>--topography, per residue--
+<option value='q2'>Q2&#37;
+<option value='htmmcc'>htm MCC
+<option value='q2t_obs'>Q2T &#37;obs
+<option value='q2t_prd'>Q2T &#37;prd
+<option value='q2n_obs'>Q2N &#37;obs
+<option value='q2n_prd'>Q2N &#37;prd
+<option value='q2'>
+<option value='qok3'>--topology, per sequence--
+<option value='qok3'>Qok3&#37;
+<option value='nterm'>Nterm&#37;
+<option value='qok3'>
+<option value='q2_ioseg'>--topology, per segment--
+<option value='q2_ioseg'>ioSeg Q2&#37;
+<option value='qiom_obs'>Qiom &#37;obs
+<option value='qio_obs'>Qio &#37;obs
+<option value='q2_ioseg'>
+<option value='q3'>--topology, per residue--
+<option value='q3'>Q3&#37;
+<option value='q2_iores'>ioRes Q2&#37;
+<option value='iomcc'>io MCC
+<option value='q3'>
+<option value='alphabet'>Method Name
+<option value='q3'>
+<option value='none'>--please select one--
+</select><br><br>
+					</td>
+					<td width=30></td>
+					<td align=left valign=bottom>
+<select name='graph_by_3'>
+<option value='qok'>--topography, per protein--
+<option value='qok'>Qok&#37;
+<option value='qok'>
+<option value='qhtm_obs'>--topography, per segment--
+<option value='qhtm_obs'>Qhtm &#37;obs (sensitivity)
+<option value='qhtm_prd' selected>Qhtm &#37;prd (specificity)
+<option value='qhtm_obs'>
+<option value='avhe_diff'>--topography, per helix boundary--
+<option value='avhe_diff'>AvHb diff
+<option value='qhe_obs'>QHb &#37;obs
+<option value='qnhe_obs'>Gauss QHb &#37;obs
+<option value='avhe_diff'>
+<option value='q2'>--topography, per residue--
+<option value='q2'>Q2&#37;
+<option value='htmmcc'>htm MCC
+<option value='q2t_obs'>Q2T &#37;obs
+<option value='q2t_prd'>Q2T &#37;prd
+<option value='q2n_obs'>Q2N &#37;obs
+<option value='q2n_prd'>Q2N &#37;prd
+<option value='q2'>
+<option value='qok3'>--topology, per sequence--
+<option value='qok3'>Qok3&#37;
+<option value='nterm'>Nterm&#37;
+<option value='qok3'>
+<option value='q2_ioseg'>--topology, per segment--
+<option value='q2_ioseg'>ioSeg Q2&#37;
+<option value='qiom_obs'>Qiom &#37;obs
+<option value='qio_obs'>Qio &#37;obs
+<option value='q2_ioseg'>
+<option value='q3'>--topology, per residue--
+<option value='q3'>Q3&#37;
+<option value='q2_iores'>ioRes Q2&#37;
+<option value='iomcc'>io MCC
+<option value='q3'>
+<option value='alphabet'>Method Name
+<option value='q3'>
+<option value='none'>--please select one--
+</select><br><br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top>
+<br>
+Graph title :&nbsp;&nbsp;&nbsp;<input type='text' name='graph_title' size=50 value=''><br>
+		</td>
+	</tr>
+</table>
+<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top colspan=2>
+<span class='h1'>Parameters for viewing sequences and predictions aligned by residue :</span><br><br>
+		</td>
+	</tr>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top>
+Display width in residues (break to a new line after this number of residues, zero means don't break at all) : <input type='text' name='display_width' size=3 value='0'><br>
+		</td>
+	</tr>
+
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top>
+<br>
+<span class='smaller'>
+OPM membrane helices are defined at <a href='http://opm.phar.umich.edu/' target='_blank'>Orientations of Proteins in Membranes (OPM) database</a><br>
+PDBTM membrane helices and loops are defined at <a href='http://pdbtm.enzim.hu//' target='_blank'>PDBTM: Protein Data Bank of Transmembrane Proteins</a>
+</span><br>
+		</td>
+	</tr>
+</table>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td></td>
+		<td align=left valign=top colspan=3>
+<br><a href="javascript:showhidediv('div_for_benchmark_criteria_show','div_for_benchmark_criteria')">click for less criteria</a>
+		</td>
+	</tr>
+</table>
+</div>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td align=left valign=top bgcolor='#dddddd'>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<a name='run'>
+<span class='h2'>4.&nbsp;&nbsp;&nbsp;Press 'Execute' :</span>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<table cellspacing=10 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top>
+<input type='submit' name='submit' value='&nbsp;&nbsp;&nbsp;&nbsp;Execute&nbsp;&nbsp;&nbsp;&nbsp;'><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<input type='reset' name='reset' value='&nbsp;&nbsp;&nbsp;Reset&nbsp;&nbsp;&nbsp;'><br>
+		</td>
+		<td width=20></td>
+		<td align=left valign=top>
+Run a benchmark for chosen sequences and prediction methods :<br>
+<br>
+<input type='radio' name='run' value='benchmark' checked> run the benchmark <span class='smaller'>(may take a few seconds to run)</span><br>
+<br>
+Display chosen sequences and prediction methods :<br>
+<br>
+<input type='radio' name='run' value='display'> display sequences and predictions aligned by residue<br>
+<input type='radio' name='run' value='display_date'> display sequences and predictions aligned by residue, and other information<br>
+<br>
+Display chosen sequences :<br>
+<br>
+<input type='radio' name='run' value='fasta'> display FASTA sequences <span class='smaller'>(missing/shifted residues appear as _ )</span><br>
+<input type='radio' name='run' value='fastaG'> display FASTA sequences <span class='smaller'>(missing/shifted residues appear as G for glycine)</span><br>
+<input type='radio' name='run' value='dload'> download FASTA sequences <span class='smaller'>(missing/shifted residues appear as _ )</span><br>
+<input type='radio' name='run' value='dloadG'> download FASTA sequences <span class='smaller'>(missing/shifted residues appear as G for glycine)</span><br>
+<input type='radio' name='run' value='list'> list sequence IDs<br>
+<input type='radio' name='run' value='names'> list sequence IDs, names and other information<br>
+<input type='radio' name='run' value='count'> count the number of sequences<br>
+		</td>
+		<td width=20></td>
+		<td align=left valign=top width=360>
+<br>
+<br>
+The data for the benchmarking standard is from protein models in the Protein Data Bank (PDB)<sup>11</sup>.<br>
+<br>
+FASTA sequence is from the corresponding PDB FASTA file and sometimes contains more residues than appear in the PDB model file.<br>
+<br>
+Where necessary, FASTA sequences have been shifted to conserve the residue numbering in the PDB model file.<br>
+<br>
+Missing residues and sequence positions of shifted residues were set to G for Glycine when submitted to prediction programs for this benchmark.<br>
+<br>
+		</td>
+	</tr>
+</table>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+</form>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+<a name='footer'>
+<a name='key'>
+<a name='key_benchmark'>
+
+<div id='div_for_key_to_benchmark_results_show'>
+<table cellspacing=0 cellpadding=0 border=1><tr><td>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr>
+<td bgcolor='#eeeeee'>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0 width=800>
+				<tr>
+					<td align=left valign=top>
+<span class='h1'>KEY TO BENCHMARK RESULTS :</span> <a href="javascript:showhidediv('div_for_key_to_benchmark_results','div_for_key_to_benchmark_results_show')">click to show</a><br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>
+</td></tr></table>
+</div>
+
+<div id='div_for_key_to_benchmark_results'>
+
+<table cellspacing=0 cellpadding=0 border=1><tr><td>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr>
+<td bgcolor='#eeeeee'>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<span class='h1'>KEY TO BENCHMARK RESULTS :</span> <a href="javascript:showhidediv('div_for_key_to_benchmark_results_show','div_for_key_to_benchmark_results')">click to hide</a><br>
+
+<br><br>
+<center>TOPOGRAPHY SCORES (for scoring predictions of membrane helices versus not membrane helix) :</center><br><br>
+
+Per protein sequence accuracy score :<br>
+
+<ul><li>Qok&#37; : Percentage of protein sequences for which all membrane helices are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Qok&#37;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of protein sequences (chains) having<br>
+			all observed membrane helices are predicted by the prediction method<br>
+			and all predicted membrane helices are actually observed in the benchmark data<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of protein sequences (chains)<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+Per segment accuracy scores :<br>
+
+<ul><li>Qhtm &#37;obs : Percentage of all observed membrane helices that are predicted correctly<br><span class='smaller'>&nbsp;&nbsp;&nbsp;(sensitivity)</span></li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Qhtm &#37;obs&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of membrane helices observed in the benchmark data<br>
+			that the prediction method did predict as being membrane helices<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of membrane helices observed in the benchmark data<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>Qhtm &#37;prd : Percentage of all predicted membrane helices that are predicted correctly<br><span class='smaller'>&nbsp;&nbsp;&nbsp;(specificity)</span></li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Qhtm &#37;prd&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of membrane helices predicted by the prediction method<br>
+			that are actually observed in the benchmark data as being membrane helices<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of membrane helices predicted by the prediction method<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+Helix boundary accuracy scores :<br>
+
+<ul><li>AvHb diff : Average helix boundary position difference in residues for the prediction versus the observed helix boundaries</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>AvHb diff&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&sum; | ( distance in residues of observed helix boundary minus predicted helix boundary ) |<br>
+			____________________________________________________________<br><br>
+			number of membrane helices observed in the benchmark data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>
+			that the prediction method did predict as being membrane helices<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>( non-predicted observed helices and non-observed predicted helices are not included )</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>QHb &#37;obs : Percentage of all observed membrane helix boundaries (2 per helix) that are predicted correctly (within distance from observed boundary)</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>QHb &#37;obs&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of membrane helix boundaries observed in the benchmark data<br>
+			for which the prediction method predicted the helix boundary<br>
+			within a certain number of residues from the boundary actually observed in the benchmark data<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of membrane helices observed in the benchmark data * 2<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<!-- <ul><li>QHb &#37;prd : Percentage of all predicted membrane helix boundaries (2 per helix) that are predicted correctly (within distance from observed boundary)</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>QHb &#37;prd&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of membrane helix boundaries predicted by the prediction method<br>
+			for which the helix boundary actually observed in the benchmark data<br>
+			is within a certain number of residues from the predicted boundary<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of membrane helices predicted by the prediction method * 2<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table> -->
+
+<ul><li>Gauss QHb &#37;obs : Scaled percentage of all observed membrane helix boundaries (2 per helix) that are predicted correctly<br>
+<span class='smaller'>(score is scaled as a Gaussian curve normal distribution (mean = 0, variance = std-dev<sup>2</sup> = 5 or chosen by user) around the observed helix boundary because observed helix boundary may not be exact)</span></li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Gauss QHb &#37;obs&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&sum; ( score for each membrane helix boundary predicted by the prediction method )<br>
+			____________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of membrane helices observed in the benchmark data * 2<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>standard-deviation&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maximum distance in residues to include in the membrane-helix-boundary scores<br><br></span>
+		</td>
+		</tr>
+		</table>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>distance&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;predicted helix boundary - observed helix boundary<br><br></span>
+		</td>
+		</tr>
+		</table>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>score for each membrane helix boundary&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>predicted by the prediction method</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			<br>
+			<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;score-numerator&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;score-denominator&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
+			</span>
+		</td>
+		</tr>
+		<tr>
+		<td></td>
+		<td></td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			( if predicted helix boundary is within or equal to 2 * standard-deviation from the observed helix boundary;<br>
+			&nbsp;&nbsp;otherwise score = 0 )<br><br>
+		</td>
+		</tr>
+		</table>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>score-numerator&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=center valign=top>
+			<span class="blue_smaller">
+			<br>
+			<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u><br>
+			standard-deviation * &#8730; ( 2 * &Pi; )<br><br>
+			</span>
+		</td>
+		<td align=right valign=top>
+			<span class="blue_smaller">
+			<br>
+			&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;e&nbsp;<br><br>
+			<br><br>
+			</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			- ( distance - mean )<sup>2</sup> / (2 * standard-deviation<sup>2</sup> ) )<br>
+			<br><br>
+			<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>score-denominator&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=center valign=top>
+			<span class="blue_smaller">
+			<br>
+			<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u><br>
+			standard-deviation * &#8730; ( 2 * &Pi; )<br><br>
+			</span>
+		</td>
+		<td align=right valign=top>
+			<span class="blue_smaller">
+			<br>
+			&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;e&nbsp;<br><br>
+			<br><br>
+			</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			- ( mean )<sup>2</sup> / (2 * standard-deviation<sup>2</sup> ) )<br>
+			<br><br>
+			<br><br>
+			</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=center valign=top>
+			<span class="blue_smaller">
+			<br>
+			<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u><br>
+			standard-deviation * &#8730; ( 2 * &Pi; )<br><br>
+			</span>
+		</td>
+		</tr>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td></td>
+		<td align=left valign=top colspan=5>
+			<span class="blue_smaller">
+			( Thus, when predicted helix boundary is same as observed helix boundary, then distance = 0, and score = 1 or 100&#37; )<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<!-- <ul><li>Gauss QHb &#37;prd : Scaled percentage of all predicted membrane helix boundaries (2 per helix) that are predicted correctly<br>
+<span class='smaller'>(score is scaled as a Gaussian curve normal distribution (mean = 0, variance = std-dev<sup>2</sup> = 5 or chosen by user) around the observed helix boundary because observed helix boundary may not be exact)</span></li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Gauss QHb &#37;prd&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&sum; ( score for each membrane helix boundary predicted by the prediction method )<br>
+			____________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of membrane helices predicted by the prediction method * 2<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>( score for each membrane helix boundary predicted by the prediction method = defined above in calculation for Scaled Boundaries &#37;obs )</span>
+		</td>
+		</tr>
+		</table>
+		<br>
+	</td>
+	</tr>
+	</table> -->
+
+Per residue accuracy scores :<br>
+
+<ul><li>Q2&#37; : Percentage of correctly predicted residues in two-states: membrane helix / not part of a membrane helix<br>
+<span class='smaller'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(each sequence contributes equally so that long sequences don't dominate the score)</span></li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Q2&#37;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number of residues in a sequence that were correctly predicted as being membrane helix or not<br>
+			(&nbsp;&nbsp;&nbsp;&sum;&nbsp;&nbsp;&nbsp;( ________________________________________________________________________________ )&nbsp;&nbsp;&nbsp;)&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;number of sequences<br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number of residues in that sequence<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>htm MCC : Matthews Correlation Co-efficient<sup>*</sup> for prediction of residues as membrane helical vs. not membrane helical</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>htm MCC&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(TP*TN) - (FP*FN)<br>
+			________________________________________<br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8730; ( (TP+FP) * (TP+FN) * (TN+FP) * (TN+FN) )<br><br>
+		TP (true positives) = number of correctly predicted membrane helix residues<br>
+		TN (true negatives) = number of residues correctly predicted as not in a membrane helix<br>
+		FP (false positives) = number of incorrectly predicted membrane helix residues<br>
+		FN (false negatives) = number of residues incorrectly predicted as not in a membrane helix<br>
+		<sup>*</sup> Matthews B (1975) Comparison of the predicted and observed secondary structure of T4 phage lysozyme. Biochimica et Biophysica acta, 405, 442-451.<br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>Q2T &#37;obs : Percentage of all observed membrane helix residues that are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Q2T &#37;obs&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of residues predicted as being part of a membrane helix<br>
+			that really are observed in the benchmark data as being in a membrane helix<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of residues that are observed in the benchmark data as being in a membrane helix<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>Q2T &#37;prd : Percentage of all predicted membrane helix residues that are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Q2T &#37;prd&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of residues predicted as being part of a membrane helix<br>
+			that really are observed in the benchmark data as being in a membrane helix<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of residues predicted as being part of a membrane helix<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>Q2N &#37;obs : Percentage of all observed non-membrane helix residues that are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Q2N &#37;obs&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of residues predicted as NOT being part of a membrane helix<br>
+			that really are observed in the benchmark data as NOT being in a membrane helix<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of residues that are observed in the benchmark data as NOT being in a membrane helix<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>Q2N &#37;prd : Percentage of all predicted non-membrane helix residues that are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Q2N &#37;prd&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of residues predicted as NOT being part of a membrane helix<br>
+			that really are observed in the benchmark data as NOT being in a membrane helix<br>
+			______________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of residues predicted as NOT being in a membrane helix<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</td></tr>
+<tr>
+<td bgcolor='#f3fff4'>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<br>
+<center>TOPOLOGY SCORES (for scoring predictions of inside/outside topology) :</center><br><br>
+
+Per protein sequence accuracy score :<br>
+
+<ul><li>Qok3&#37; : Percentage of protein sequences for which all inside, outside and membrane helix topologies are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Qok3&#37;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of protein sequences (chains) having<br>
+			all observed segment topologies (inside, outside or membrane helix) are predicted by the prediction method<br>
+			and all predicted segment topologies are actually observed in the benchmark data<br>
+			__________________________________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of protein sequences (chains)<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>Nterm &#37; : Percentage of protein sequences for which the topology of the N-terminal topology is predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Nterm &#37;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of protein sequences (chains) having<br>
+			N-terminal topology predicted correctly (inside or outside side of membrane)<br>
+			__________________________________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of protein sequences (chains)<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+Per segment accuracy scores :<br>
+
+<ul><li>ioSeg Q2&#37; : Percentage of correctly predicted topology segments in two-states: inside side / outside side of membrane<br>
+<span class='smaller'>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(each sequence contributes equally so that a topology prediction that starts correctly and finishes incorrectly<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;due to a missed membrane segment prediction rather than due to an incorrect topology prediction start<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will be penalised as an incompletely correct topology prediction (or not completely incorrect prediction) and long sequences will not be overly penalised in the final score)<br></span></li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>ioSeg Q2&#37;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number of correctly predicted non-membrane topologies<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(inside side or outside side of membrane) predicted in a sequence<br>
+			(&nbsp;&nbsp;&nbsp;&sum;&nbsp;&nbsp;&nbsp;( _____________________________________________________________________________________ )&nbsp;&nbsp;&nbsp;)&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;number of sequences<br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number of non-membrane topologies (inside side or outside side of membrane) observed in that sequence<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>Qiom &#37;obs : Percentage of all observed topologies (inside, outside or membrane helix) that are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Qiom &#37;obs&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of topology segments (inside, outside or membrane helix) observed in the benchmark data<br>
+			that the prediction method did predict as being the correct type of topology<br>
+			__________________________________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of topology segments observed in the benchmark data<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<!-- <ul><li>Qiom &#37;prd : Percentage of all topologies (inside, outside or membrane helix) that are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Qiom &#37;prd&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of topology segments (inside, outside or membrane helix) predicted by the prediction method<br>
+			that are actually observed in the benchmark data as being of that type of topology<br>
+			__________________________________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of topology segments predicted by the prediction method<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table> -->
+
+<ul><li>Qio &#37;obs : Percentage of all observed non-membrane topologies (inside side or outside side of membrane) that are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Qio &#37;obs&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of non-membrane topologies (inside side or outside side of membrane) observed in the benchmark data<br>
+			that the prediction method did predict as being the correct type of non-membrane topology<br>
+			__________________________________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of non-membrane topologies observed in the benchmark data<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<!-- <ul><li>Qio &#37;prd : Percentage of all predicted non-membrane topologies (inside side or outside side of membrane) that are predicted correctly</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Qio &#37;prd&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			number of non-membrane topologies (inside side or outside side of membrane) predicted by the prediction method<br>
+			that are actually observed in the benchmark data as being membrane helices<br>
+			__________________________________________________________________________________________&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100<br><br>
+			number of non-membrane topologies predicted by the prediction method<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table> -->
+
+Per residue accuracy scores :<br>
+
+<ul><li>Q3&#37; : Percentage of correctly predicted residues in three-states: membrane helix / inside non-membrane residue / outside non-membrane residue<br>
+<span class='smaller'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(each sequence contributes equally so that long sequences don't dominate the score)</span></li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>Q3&#37;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number of residues in a sequence that were correctly predicted as being<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;membrane helix, inside non-membrane residue or outside non-membrane residue<br>
+			(&nbsp;&nbsp;&nbsp;&sum;&nbsp;&nbsp;&nbsp;( ______________________________________________________________________ )&nbsp;&nbsp;&nbsp;)&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;number of sequences<br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number of residues in that sequence<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>ioRes Q2&#37; : Percentage of correctly predicted residues in two-states: inside non-membrane residue / outside non-membrane residue<br>
+<span class='smaller'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(each sequence contributes equally so that long sequences don't dominate the score)</span></li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>ioRes Q2&#37;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number of non-membrane residues in a sequence that were correctly predicted as being<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inside non-membrane or outside non-membrane residue<br>
+			(&nbsp;&nbsp;&nbsp;&sum;&nbsp;&nbsp;&nbsp;( ______________________________________________________________________ )&nbsp;&nbsp;&nbsp;)&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;100&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;number of sequences<br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number of non-membrane residues in that sequence<br><br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<ul><li>io MCC : Matthews Correlation Co-efficient<sup>*</sup> for topology prediction of residues as either on the inside vs. the outside side of the membrane</li></ul>
+	<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+	<td align=left valign=top>
+		<table cellspacing=0 cellpadding=0 border=0>
+		<tr>
+		<td width=100>&nbsp;</td>
+		<td align=left valign=top>
+			<span class="blue_smaller"><br>io MCC&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+		</td>
+		<td align=left valign=top>
+			<span class="blue_smaller">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(TP*TN) - (FP*FN)<br>
+			________________________________________<br><br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#8730; ( (TP+FP) * (TP+FN) * (TN+FP) * (TN+FN) )<br><br>
+		TP (true positives) = number of non-membrane residues on the inside side of the membrane that are correctly predicted<br>
+		TN (true negatives) = number of non-membrane residues on the inside side of the membrane<br>
+		FP (false positives) = number of non-membrane residues on the outside side of the membrane that are correctly predicted<br>
+		FN (false negatives) = number of non-membrane residues on the outside side of the membrane<br>
+		<sup>*</sup> Matthews B (1975) Comparison of the predicted and observed secondary structure of T4 phage lysozyme. Biochimica et Biophysica acta, 405, 442-451.<br>
+			</span>
+		</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+
+<br>
+<span class='smaller'>Inside refers to the inside side of the membrane, and outside refers to the outside side of the membrane.</span>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+</td>
+</tr>
+</table>
+</td></tr></table>
+
+<br><br>
+
+</div>
+
+<a name='key_view'>
+
+<div id='div_for_key_to_display_aligned_show'>
+<table cellspacing=0 cellpadding=0 border=1><tr><td>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr>
+<td bgcolor='#eeeeee'>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0 width=800>
+				<tr>
+					<td align=left valign=top>
+<span class='h1'>KEY TO DISPLAY OF ALIGNED SEQUENCES AND PREDICTIONS :</span> <a href="javascript:showhidediv('div_for_key_to_display_aligned','div_for_key_to_display_aligned_show')">click to show</a><br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>
+</td></tr></table>
+</div>
+
+<div id='div_for_key_to_display_aligned'>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<span class='h1'>KEY TO DISPLAY OF ALIGNED SEQUENCES AND PREDICTIONS :</span> <a href="javascript:showhidediv('div_for_key_to_display_aligned_show','div_for_key_to_display_aligned')">click to hide</a><br>
+<br>
+
+OPM<sup>6,7</sup> :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>M : transmembrane secondary structure segment</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : inside (on the inside side of the membrane)</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>&nbsp;&nbsp;&nbsp;(may be &alpha;-helix for membrane helical proteins</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>o : outside (on the outside side of the membrane)</span></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>&nbsp;&nbsp;&nbsp;&nbsp;or &beta;-sheet for beta-barrel membrane proteins)</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>_ : residue position unknown - not in PDB file</span></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>m : membrane residue not part of transmembrane segment</span></td>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>&nbsp;&nbsp;&nbsp;(residue's &alpha;-carbon used to decide if residue in membrane or not)</span></td>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+PDBTM<sup>8,9</sup> :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>H : alpha helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>L : membrane loop</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>1 : side 1</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>C : coil</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : inside (assigned by comparing PDBTM sides 1 and 2 to OPM)</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>B : beta strand</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>I : membrane inside</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>2 : side 2</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>U : unknown</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>o : outside (assigned by comparing PDBTM sides 1 and 2 to OPM)</span></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+DSSP<sup>12</sup> :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>H : &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>E : &beta; sheet</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>T : turn</span></td>
+		<td width=30></td>
+		<td align=left valign=top></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>I : &pi; helix</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>B : &beta; bridge</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>S : high curvature region</span></td>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>G : 3<sub>10</sub> helix</span></td>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>_ : other (loop) or unknown</span></td>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+STRIDE<sup>13</sup> :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>H : &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>E&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: Extended conformation</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>T : turn</span></td>
+		<td width=30></td>
+		<td align=left valign=top></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>I : &pi; helix</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>B or b : &beta; isolated bridge</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>S : high curvature region</span></td>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>G : 3<sub>10</sub> helix</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>C&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: coil (none of the above)</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>_ : residue position unknown - not in PDB file</span></td>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+ENSEMBLE in (MemPype), HMM-TM, HMMTOP (in TOPCONS-single), MEMSAT (in TOPCONS-single), OCTOPUS (in TOPCONS), proT, prodivT,<br>
+SCAMPI, SCAMPI-multi (multiple sequence alignment) (in TOPCONS), SCAMPI-sequence (in TOPCONS-single), SCAMPI-sequence (in TOPCONS),<br>
+TMHMM2, S-TMHMM (in TOPCONS-single), TMMOD, TOPCONS, TOPCONS-single :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>M : membrane &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : inside (on the inside side of the membrane)</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>o : outside (on the outside side of the membrane)</span></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+SVMtop :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>H : membrane &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : inside (on the inside side of the membrane)</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>o : outside (on the outside side of the membrane)</span></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+TOPPRED2 :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>M : membrane &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : inside (on the inside side of the membrane)</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>l : non-membrane loop</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>o : outside (on the outside side of the membrane)</span></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+DAS2002, DAS1997, deltaG, MemBrain, MINNOU, PRED-TMR, SOSUI, SPLIT4, SVMtm, TMAP, VALPRED, VALPRED2, waveTM,<br>
+Eisenberg (7,10), Eisenberg (11,10), Eisenberg (19,10), Kyte-Doolittle (7,10), Kyte-Doolittle (11,10), Kyte-Doolittle (19,10), OHM (7,10), OHM (11,10), OHM (19,10) :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>M : membrane &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>_ : not a membrane &alpha; helix</span></td>
+		<td width=30></td>
+	</tr>
+</table>
+<br>
+
+PHDhtm (at PBIL) :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>H : membrane &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>_ : not a membrane &alpha; helix</span></td>
+		<td width=30></td>
+	</tr>
+</table>
+<br>
+
+PHDThtm (at PBIL) :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>T : transmembrane region</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : intra-cytoplasmic</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>_ : not a membrane &alpha; helix</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>o : extra-cytoplasmic</span></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+DAS-TMfilter :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>M : membrane &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>S : Potential signal peptide</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>_ : not a membrane &alpha; helix</span></td>
+		<td width=30></td>
+	</tr>
+</table>
+<br>
+
+OCTOPUS :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>M : the hydrophobic part of the membrane, 0-13&#197; from the membrane center</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : inside side of the membrane</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>L : a close loop region, 13-23&#197; from the membrane center </span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>o : outside side of the membrane</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>R : reentrant</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>g : a globular region, further than 23&#197; from the membrane</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>I : the membrane water-interface, 11-18&#197; from the membrane center</span></td>
+		<td width=30></td>
+		<td align=left valign=top></td>
+		<td width=30></td>
+	</tr>
+</table>
+<br>
+
+HMMTOP2 :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>H : membrane helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : inside helix tail (not in membrane)</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>I : inside loop</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>o : outside helix tail (not in membrane)</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>O : outside loop</span></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+MEMSAT-SVM, Philius, Phobius, PolyPhobius :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>H : membrane helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>i : inside side of the membrane</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>S : signal peptide</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>o : outside side of the membrane</span></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+MEMSAT3 :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>H : Central transmembrane helix segment</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>S : Possible N-terminal signal peptide</span></td>
+		<td width=30></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>I : Inside helix cap</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>+ : Inside loop</span></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td align=left valign=top><span class='tt'>O : 	Outside helix cap</span></td>
+		<td></td>
+		<td align=left valign=top><span class='tt'>- : Outside loop</span></td>
+		<td></td>
+	</tr>
+</table>
+<br>
+
+TMLOOP :<br>
+<br>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>M : membrane &alpha; helix</span></td>
+		<td width=30></td>
+		<td align=left valign=top><span class='tt'>_ : not a membrane &alpha; helix</span></td>
+		<td width=30></td>
+	</tr>
+</table>
+<br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+</div>
+
+<a name='end_key'>
+
+<a name='benchmark_references'>
+
+<div id='div_for_benchmark_references_show'>
+<table cellspacing=0 cellpadding=0 border=1><tr><td>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr>
+<td bgcolor='#eeeeee'>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0 width=800>
+				<tr>
+					<td align=left valign=top>
+<span class='h1'>REFERENCES USED IN CREATING BENCHMARK SERVER :</span> <a href="javascript:showhidediv('div_for_benchmark_references','div_for_benchmark_references_show')">click to show</a><br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>
+</td></tr></table>
+</div>
+
+<div id='div_for_benchmark_references'>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<span class='h1'>REFERENCES USED IN CREATING BENCHMARK SERVER :</span> <a href="javascript:showhidediv('div_for_benchmark_references_show','div_for_benchmark_references')">click to hide</a><br>
+<table cellspacing=10 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top>[1]</td>
+		<td align=left valign=top>Emma M. Rath, Dominique Tessier, Alexander A. Campbell, Hong Ching Lee, Tim Werner, Noeris K. Salam, Lawrence K. Lee, W. Bret Church (2013)<br>'A benchmark server using high resolution protein structure data, and benchmark results for membrane helix predictions'<br>BMC Bioinformatics, 14, 111 doi: 10.1186/1471-2105-14-111.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed/23530628' target='_blank'>23530628</a></td>
+	</tr><tr>
+		<td align=left valign=top>[2]</td>
+		<td align=left valign=top>Lawrence K. Lee, Noeris K. Salam, and W. Bret Church (in preparation)<br>'Transmembrane helix analysis using threading approaches'</td>
+	</tr><tr>
+		<td align=left valign=top>[3]</td>
+		<td align=left valign=top>Kernytsky A, Rost B (2003)<br>'Static benchmarking of membrane helix predictions'<br>Nucleic Acids Research, 31, 3642-3644. 
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=12824384' target='_blank'>12824384</a></td>
+	</tr><tr>
+		<td align=left valign=top>[4]</td>
+		<td align=left valign=top>Chen CP, Kernytsky A, Rost B (2002)<br>'Transmembrane helix predictions revisited'<br>Protein Science, 11, 2774-2791.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=12441377' target='_blank'>12441377</a></td>
+	</tr><tr>
+		<td align=left valign=top>[5]</td>
+		<td align=left valign=top>Zemla A, Venclovas &#268;, Fidelis K, Rost B (1999)<br>'A Modified Definition of Sov, a Segment-Based Measure for Protein Secondary Structure Prediction Assessment'<br>PROTEINS: Structure, Function, and Genetics, 34, 220-223.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10022357' target='_blank'>10022357</a></td>
+	</tr><tr>
+		<td align=left valign=top>[6]</td>
+		<td align=left valign=top>Lomize MA, Lomize AL, Pogozheva ID, Mosberg HI (2006)<br>'OPM: Orientations of Proteins in Membranes database'<br>Bioinformatics, 22, 623-625.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=16397007' target='_blank'>16397007</a></td>
+	</tr><tr>
+		<td align=left valign=top>[7]</td>
+		<td align=left valign=top>Lomize MA, Pogozheva ID, Joo H, Mosberg HI, Lomize AL (2012)<br>OPM database and PPM web server: resources for positioning of proteins in membranes.<br>Nucleic Acids Research, 40(Database issue), D370-376.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=21890895' target='_blank'>21890895</a></td>
+	</tr><tr>
+		<td align=left valign=top>[8]</td>
+		<td align=left valign=top>Tusn&aacute;dy GE, Doszt&aacute;nyi Z, Simon I. (2004)<br>'Transmembrane proteins in the Protein Data Bank: identification and classification.'<br>Bioinformatics, 20, 2964-2972.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15180935' target='_blank'>15180935</a></td>
+	</tr><tr>
+		<td align=left valign=top>[9]</td>
+		<td align=left valign=top>Tusn&aacute;dy GE, Doszt&aacute;nyi Z, Simon I. (2005)<br>'PDB_TM: selection and membrane localization of transmembrane proteins in the protein data bank.'<br>Nucleic Acids Research, 33(Database issue), D275-8.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15608195' target='_blank'>15608195</a></td>
+	</tr><tr>
+		<td align=left valign=top>[10]</td>
+		<td align=left valign=top>White SH. (2009)<br>Biophysical dissection of membrane proteins.<br>Nature, 459, 344-346.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19458709' target='_blank'>19458709</a></td>
+	</tr><tr>
+		<td align=left valign=top>[11]</td>
+		<td align=left valign=top>Berman HM, Westbrook J, Feng Z, Gilliland G, Bhat TN, Weissig H, Shindyalov IN, Bourne PE. (2000)<br>The Protein Data Bank.<br>Nucleic Acids Research, 28, 235-242.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10592235' target='_blank'>10592235</a></td>
+	</tr><tr>
+		<td align=left valign=top>[12]</td>
+		<td align=left valign=top>Kabsch W, Sander C (1983)<br>Dictionary of protein secondary structure: pattern recognition of hydrogen-bonded and geometrical features.<br>Biopolymers, 22, 2577-637.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=6667333' target='_blank'>6667333</a></td>
+	</tr><tr>
+		<td align=left valign=top>[13]</td>
+		<td align=left valign=top>Frishman D, Argos P (1995)<br>Knowledge-based secondary structure assignment.<br>Proteins: structure, function and genetics, 23, 566-579.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8749853' target='_blank'>8749853</a></td>
+	</tr><tr>
+		<td align=left valign=top>[14]</td>
+		<td align=left valign=top>Hobohm U, Scharf M, Schneider R, Sander C (1992)<br>Selection of representative protein data sets.<br>Protein Science, 1, 409-417.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=1304348' target='_blank'>1304348</a></td>
+	</tr><tr>
+		<td align=left valign=top>[15]</td>
+		<td align=left valign=top>Sander C, Schneider R (1991)<br>Database of Homology-Derived Protein Structures and the Structural Meaning of Sequence Alignment.<br>Proteins: Structure, Function, and Genetics, 9, 56-68.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=2017436' target='_blank'>2017436</a></td>
+	</tr><tr>
+		<td align=left valign=top>[16]</td>
+		<td align=left valign=top>Needleman SB, Wunsch CD (1970)<br>A general method applicable to the search for similarities in the amino acid sequence of two proteins.<br>Journal of Molecular Biology, 48, 443-453.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=5420325' target='_blank'>5420325</a></td>
+	</tr><tr>
+		<td align=left valign=top>[17]</td>
+		<td align=left valign=top>Smith TF, Waterman MS (1981)<br>Identification of Common Molecular Subsequences.<br>Journal of Molecular Biology, 147, 195-197.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7265238' target='_blank'>7265238</a></td>
+	</tr><tr>
+		<td align=left valign=top>[18]</td>
+		<td align=left valign=top>Rice P, Longden I, Bleasby A (2000)<br>EMBOSS: the European Molecular Biology open software suite.<br>Trends in Genetics, 16, 276-277.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a></td>
+	</tr><tr>
+		<td align=left valign=top>[19]</td>
+		<td align=left valign=top>Li W, Godzik A (2006)<br>Cd-hit: a fast program for clustering and comparing large sets of protein or nucleotide sequences.<br>Bioinformatics, 22, 13, 1658-1659.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=16731699' target='_blank'>16731699</a></td>
+	</tr><tr>
+		<td align=left valign=top>[20]</td>
+		<td align=left valign=top>Altschul S, Gish W, Miller W, Myers E, Lipman D (1990)<br>Basic local alignment search tool.<br>Journal of Molecular Biology, 215, 3, 403-410.
+		PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=2231712' target='_blank'>2231712</a></td>
+	</tr>
+</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+</div>
+
+<div id='div_for_methods_benchmarked_show'>
+<table cellspacing=0 cellpadding=0 border=1><tr><td>
+<table cellspacing=0 cellpadding=0 border=0>
+<tr>
+<td bgcolor='#eeeeee'>
+<table cellspacing=0 cellpadding=0 border=0>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0 width=800>
+				<tr>
+					<td align=left valign=top>
+<span class='h1'>METHODS BENCHMARKED IN BENCHMARK SERVER  :</span> <a href="javascript:showhidediv('div_for_methods_benchmarked','div_for_methods_benchmarked_show')">click to show</a><br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>
+</td></tr></table>
+</div>
+
+<div id='div_for_methods_benchmarked'>
+
+<a name='method_references'>
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<span class='h1'>METHODS BENCHMARKED IN BENCHMARK SERVER :</span> <a href="javascript:showhidediv('div_for_methods_benchmarked_show','div_for_methods_benchmarked')">click to hide</a><br>
+<table cellspacing=10 cellpadding=0 border=0>
+	<tr>
+		<td align=left valign=top><span class='tt'>DASTMfilt</span></td>
+		<td align=left valign=top>
+			DAS-TMfilter<br>
+			<a href='http://www.enzim.hu/DAS/DAS.html' target='_blank'>http://www.enzim.hu/DAS/DAS.html</a><br>
+			Cserzo M, Eisenhaber F, Eisenhaber B, Simon I (2004) <br>TM or not TM: transmembrane protein prediction with low false positive rate using DAS-TMfilter. Bioinformatics, 20, 1, 136-137.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=14693825' target='_blank'>14693825</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and hydropathy dot-plots)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>DAS2002</span></td>
+		<td align=left valign=top>
+			DAS2002<br>
+			<a href='http://mendel.imp.ac.at/DAS/' target='_blank'>http://mendel.imp.ac.at/DAS/</a><br>
+			Cserzo M, Eisenhaber F, Eisenhaber B, Simon I (2002) <br>On filtering false positive transmembrane protein predictions. Protein Engineering, 15, 745-752.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=12456873' target='_blank'>12456873</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and hydropathy dot-plots)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>DAS1997l</span></td>
+		<td align=left valign=top>
+			DAS1997 (loose)<br>
+			<a href='http://www.sbc.su.se/~miklos/DAS/' target='_blank'>http://www.sbc.su.se/~miklos/DAS/</a> cutoff=1.7<br>
+			Cserzo M, Wallin E, Simon I, von Heijne G, Elofsson A (1997) <br>Prediction of transmembrane alpha-helices in procariotic membrane proteins: the Dense Alignment Surface method. Protein Engineering, 10, 673-676.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=9278280' target='_blank'>9278280</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and hydropathy dot-plots)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>DAS1997s</span></td>
+		<td align=left valign=top>
+			DAS1997 (strict)<br>
+			<a href='http://www.sbc.su.se/~miklos/DAS/' target='_blank'>http://www.sbc.su.se/~miklos/DAS/</a> cutoff=2.2<br>
+			Cserzo M, Wallin E, Simon I, von Heijne G, Elofsson A (1997) <br>Prediction of transmembrane alpha-helices in procariotic membrane proteins: the Dense Alignment Surface method. Protein Engineering, 10, 673-676.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=9278280' target='_blank'>9278280</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and hydropathy dot-plots)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>deltaG</span></td>
+		<td align=left valign=top>
+			deltaG<br>
+			<a href='http://www.cbr.su.se/DGpred/' target='_blank'>http://www.cbr.su.se/DGpred/</a><br>
+			Hessa T, Meindl-Beinker N, Bernsel A, Kim J, Sato Y, Lerch M, Lundin C, Nilsson I, White SH, von Heijne G (2007) <br>Molecular code for transmembrane-helix recognition by the Sec61 translocon. Nature, 450, 1026-1030.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18075582' target='_blank'>18075582</a><br>
+			<span class='blue_italic_smaller'>(uses experimentally derived biophysical residue free energy values for insertion into membranes)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>Eisen(7)</span></td>
+		<td align=left valign=top>
+			Eisenberg (7,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=Eisenberg window=7 cutoff=10, minimum helix length of 10<br>
+			Eisenberg D, Weiss RM, Terwilliger TC (1982) <br>The helical hydrophobic moment: a measure of the amphiphilicity of a helix. Nature, 299, 371-374.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7110359' target='_blank'>7110359</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>Eisen(11)</span></td>
+		<td align=left valign=top>
+			Eisenberg (7,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=Eisenberg window=11 cutoff=10, minimum helix length of 10<br>
+			Eisenberg D, Weiss RM, Terwilliger TC (1982) <br>The helical hydrophobic moment: a measure of the amphiphilicity of a helix. Nature, 299, 371-374.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7110359' target='_blank'>7110359</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>Eisen(19)</span></td>
+		<td align=left valign=top>
+			Eisenberg (7,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=Eisenberg window=19 cutoff=10, minimum helix length of 10<br>
+			Eisenberg D, Weiss RM, Terwilliger TC (1982) <br>The helical hydrophobic moment: a measure of the amphiphilicity of a helix. Nature, 299, 371-374.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7110359' target='_blank'>7110359</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>ENSEMBLE</span></td>
+		<td align=left valign=top>
+			ENSEMBLE (in the MemPype server)<br>
+			<a href='http://mu2py.biocomp.unibo.it/mempype' target='_blank'>http://mu2py.biocomp.unibo.it/mempype</a><br>
+			Martelli PL, Fariselli P, Casadio R. (2003) <br>An ENSEMBLE machine learning approach for the prediction of all-alpha membrane proteins. Bioinformatics, 19, Suppl 1, i205-11.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=12855459' target='_blank'>12855459</a><br>
+			Pierleoni A, Indio V, Savojardo C, Fariselli P, Martelli PL, Casadio R. (2011) <br>MemPype: a pipeline for the annotation of eukaryotic membrane proteins. Nucleic Acids Res, 39(Web Server issue), W375-80.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=21543452' target='_blank'>21543452</a><br>
+			<span class='blue_italic_smaller'>(uses neural network (NN) and hidden Markov models (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>HMM-TM</span></td>
+		<td align=left valign=top>
+			HMM-TM<br>
+			<a href='http://bioinformatics.biol.uoa.gr/HMM-TM/' target='_blank'>http://bioinformatics.biol.uoa.gr/HMM-TM/</a><br>
+			Bagos PG, Liakopoulos TD, Hamodrakas SJ (2006) <br>Algorithms for incorporating prior topological information in HMMs: application to transmembrane proteins. BMC Bioinformatics, 5, 7, 189.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=16597327' target='_blank'>16597327</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>HMMTOP2</span></td>
+		<td align=left valign=top>
+			HMMTOP2<br>
+			<a href='http://www.enzim.hu/hmmtop/' target='_blank'>http://www.enzim.hu/hmmtop/</a><br>
+			Tusn&aacute;dy GE, Simon I (1998) <br>Principles governing amino acid composition of integral membrane proteins: applications to topology prediction. Journal of Molecular Biology, 283, 489-506.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=9769220' target='_blank'>9769220</a><br>
+			Tusn&aacute;dy GE, Simon I (2001) <br>The HMMTOP transmembrane topology prediction server. Bioinformatics, 17, 849-850.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=11590105' target='_blank'>11590105</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>hmmtopS</span></td>
+		<td align=left valign=top>
+			HMMTOP (in the TOPCONS-single server)<br>
+			<a href='http://single.topcons.net' target='_blank'>http://single.topcons.net</a><br>
+			Tusn&aacute;dy GE, Simon I (1998) <br>Principles governing amino acid composition of integral membrane proteins: applications to topology prediction. Journal of Molecular Biology, 283, 489-506.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=9769220' target='_blank'>9769220</a><br>
+			Tusn&aacute;dy GE, Simon I (2001) <br>The HMMTOP transmembrane topology prediction server. Bioinformatics 17, 849-850.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=11590105' target='_blank'>11590105</a><br>
+			Hennerdal A, Elofsson A (2011) <br>Rapid membrane protein topology prediction. Bioinformatics 27, 9, 1322-1323.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=21493661' target='_blank'>21493661</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>KyteD(7)</span></td>
+		<td align=left valign=top>
+			Kyte-Doolittle (7,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=Kyte-Doolittle window=7 cutoff=10, minimum helix length of 10<br>
+			Kyte J, Doolittle RF (1982) <br>A simple method for displaying the hydropathic character of a protein. Journal of Molecular Biology, 157, 105-132.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7108955' target='_blank'>7108955</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>KyteD(11)</span></td>
+		<td align=left valign=top>
+			Kyte-Doolittle (7,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=Kyte-Doolittle window=11 cutoff=10, minimum helix length of 10<br>
+			Kyte J, Doolittle RF (1982) <br>A simple method for displaying the hydropathic character of a protein. Journal of Molecular Biology, 157, 105-132.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7108955' target='_blank'>7108955</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>KyteD(19)</span></td>
+		<td align=left valign=top>
+			Kyte-Doolittle (7,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=Kyte-Doolittle window=19 cutoff=10, minimum helix length of 10<br>
+			Kyte J, Doolittle RF (1982) <br>A simple method for displaying the hydropathic character of a protein. Journal of Molecular Biology, 157, 105-132.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7108955' target='_blank'>7108955</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>MemBrain</span></td>
+		<td align=left valign=top>
+			MemBrain<br>
+			<a href='http://chou.med.harvard.edu/bioinf/MemBrain' target='_blank'>http://chou.med.harvard.edu/bioinf/MemBrain</a><br>
+			Shen H, Chou JJ (2008) <br>MemBrain: improving the accuracy of predicting transmembrane helices. PLoS One. 11, 3, e2399.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18545655' target='_blank'>18545655</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and machine learning trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>MEMSAT-SVM</span></td>
+		<td align=left valign=top>
+			MEMSAT-SVM<br>
+			<a href='http://bioinf.cs.ucl.ac.uk/psipred/?program=svmmemsat' target='_blank'>http://bioinf.cs.ucl.ac.uk/psipred/?program=svmmemsat</a><br>
+			Nugent T, Jones DT (2009) <br>Transmembrane protein topology prediction using support vector machines. BMC Bioinformatics, 10, 159.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19470175' target='_blank'>19470175</a><br>
+			<span class='blue_italic_smaller'>(uses support vector machine (SVM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>MEMSAT3</span></td>
+		<td align=left valign=top>
+			MEMSAT3<br>
+			<a href='http://bioinf.cs.ucl.ac.uk/psipred/?program=svmmemsat' target='_blank'>http://bioinf.cs.ucl.ac.uk/psipred/?program=svmmemsat</a><br>
+			Jones DT (2007) <br>Improving the accuracy of transmembrane protein topology prediction using evolutionary information. Bioinformatics, 23, 5, 538-544.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=17237066' target='_blank'>17237066</a><br>
+			Jones DT, Taylor WR, Thornton JM (1994) <br>A model recognition approach to the prediction of all-helical membrane protein structure and topology. Biochemistry, 33, 10, 3038-3049.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8130217' target='_blank'>8130217</a><br>
+			<span class='blue_italic_smaller'>(uses artificial neural network (NN) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>memsatS</span></td>
+		<td align=left valign=top>
+			MEMSAT (in the TOPCONS-single server)<br>
+			<a href='http://single.topcons.net' target='_blank'>http://single.topcons.net</a><br>
+			Jones DT, Taylor WR, Thornton JM (1994) <br>A model recognition approach to the prediction of all-helical membrane protein structure and topology. Biochemistry, 33, 3038-3049.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8130217' target='_blank'>8130217</a><br>
+			Hennerdal A, Elofsson A (2011) <br>Rapid membrane protein topology prediction. Bioinformatics 27, 9, 1322-1323.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=21493661' target='_blank'>21493661</a><br>
+			<span class='blue_italic_smaller'>(uses artificial neural network (NN) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>minnou</span></td>
+		<td align=left valign=top>
+			MINNOU<br>
+			<a href='http://minnou.cchmc.org/' target='_blank'>http://minnou.cchmc.org/</a><br>
+			Cao B, Porollo A, Adamczak R, Jarrell M, Meller J (2006) <br>Enhanced Recognition of Protein Transmembrane Domains with Prediction-based Structural Profiles. Bioinformatics 22:303-309.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=16293670' target='_blank'>16293670</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue properties and solvent exposure of predicted secondary structure determined from multiple sequence alignments)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>OCTOPUS</span></td>
+		<td align=left valign=top>
+			OCTOPUS<br>
+			<a href='http://octopus.cbr.su.se/' target='_blank'>http://octopus.cbr.su.se/</a><br>
+			Viklund H, Elofsson A (2008) <br>OCTOPUS: improving topology prediction by two-track ANN-based preference scores and an extended topological grammar. Bioinformatics, 24, 15, 1662-1668.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18474507' target='_blank'>18474507</a><br>
+			Viklund H, Bernsel A, Skwark M, Elofsson A (2008) <br>SPOCTOPUS: a combined predictor of signal peptides and membrane protein topology. Bioinformatics, 24, 24, 2928-2929.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18945683' target='_blank'>18945683</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov models (HMM) and artificial neural networks (NN) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>octopusT</span></td>
+		<td align=left valign=top>
+			OCTOPUS (in the TOPCONS server)<br>
+			<a href='http://topcons.cbr.su.se/' target='_blank'>http://topcons.cbr.su.se/</a><br>
+			Viklund H, Elofsson A (2008) <br>OCTOPUS: improving topology prediction by two-track ANN-based preference scores and an extended topological grammar. Bioinformatics, 24, 15, 1662-1668.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18474507' target='_blank'>18474507</a><br>
+			Viklund H, Bernsel A, Skwark M, Elofsson A (2008) <br>SPOCTOPUS: a combined predictor of signal peptides and membrane protein topology. Bioinformatics, 24, 24, 2928-2929.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18945683' target='_blank'>18945683</a><br>
+			Bernsel A, Viklund H, Hennerdal A, Elofsson A (2009) <br>TOPCONS: consensus prediction of membrane protein topology. Nucleic Acids Research, Web Server Issue 37, W465-W468.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19429891' target='_blank'>19429891</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov models (HMM) and artificial neural networks (NN) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>OHM(7)</span></td>
+		<td align=left valign=top>
+			OHM (7,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=OHM window=7 cutoff=10, minimum helix length of 10<br>
+			Sweet RM, Eisenberg D (1983) <br>Correlation of sequence hydrophobicities measures similarity in three-dimensional protein structure. Journal of Molecular Biology, 171, 479-488.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=6663622' target='_blank'>6663622</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov models (HMM) and artificial neural networks (NN) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>OHM(11)</span></td>
+		<td align=left valign=top>
+			OHM (7,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=OHM window=11 cutoff=10, minimum helix length of 10<br>
+			Sweet RM, Eisenberg D (1983) <br>Correlation of sequence hydrophobicities measures similarity in three-dimensional protein structure. Journal of Molecular Biology, 171, 479-488.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=6663622' target='_blank'>6663622</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>OHM(19)</span></td>
+		<td align=left valign=top>
+			OHM (19,10)<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz EMBOSS 6.4.0 pepinfo method=OHM window=19 cutoff=10, minimum helix length of 10<br>
+			Sweet RM, Eisenberg D (1983) <br>Correlation of sequence hydrophobicities measures similarity in three-dimensional protein structure. Journal of Molecular Biology, 171, 479-488.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=6663622' target='_blank'>6663622</a><br>
+			Rice P, Longden I, Bleasby A (2000) <br>EMBOSS: the European Molecular Biology open software suite. Trends in Genetics, 16, 276-277.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10827456' target='_blank'>10827456</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>PHDhtm</span></td>
+		<td align=left valign=top>
+			PHDhtm (at PBIL)<br>
+			<a href='http://npsa-pbil.ibcp.fr/cgi-bin/npsa_automat.pl?page=/NPSA/npsa_htm.html' target='_blank'>http://npsa-pbil.ibcp.fr/cgi-bin/npsa_automat.pl?page=/NPSA/npsa_htm.html</a><br>
+			Rost B, Sander C (1994) <br>Combining evolutionary information and neural networks to predict protein secondary structure. Proteins, 19, 55-72.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8066087' target='_blank'>8066087</a><br>
+			Rost B, Sander C (1993) <br>Prediction of protein secondary structure at better than 70&#37; accuracy. J. Mol. Biol., 232, 584-599.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8345525' target='_blank'>8345525</a><br>
+			Rost B, Sander C (1993) <br>Improved prediction of protein secondary structure by use of sequence profiles and neural networks. Proc. Natl. Acad. Sci. U.S.A., 90, 7558-7562. 
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8356056' target='_blank'>8356056</a><br>
+			Rost B, Casadio R, Fariselli P, Sander C (1995) <br>Transmembrane helices predicted at 95&#37; accuracy. Protein Sci, 4, 3, 521-533.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7795533' target='_blank'>7795533</a><br>
+			Combet C, Blanchet C, Geourjon C, Del&eacute;age G (2000) <br>NPS&#64;: Network Protein Sequence Analysis. TIBS 2000, 3, 291, 147-150.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10694887' target='_blank'>10694887</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and artificial neural network (NN) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>PHDThtm</span></td>
+		<td align=left valign=top>
+			PHDThtm (at PBIL)<br>
+			<a href='http://npsa-pbil.ibcp.fr/cgi-bin/npsa_automat.pl?page=/NPSA/npsa_htm.html' target='_blank'>http://npsa-pbil.ibcp.fr/cgi-bin/npsa_automat.pl?page=/NPSA/npsa_htm.html</a><br>
+			Rost B, Sander C (1994) <br>Combining evolutionary information and neural networks to predict protein secondary structure. Proteins, 19, 55-72.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8066087' target='_blank'>8066087</a><br>
+			Rost B, Sander C (1993) <br>Prediction of protein secondary structure at better than 70&#37; accuracy. J. Mol. Biol., 232, 584-599.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8345525' target='_blank'>8345525</a><br>
+			Rost B, Sander C (1993) <br>Improved prediction of protein secondary structure by use of sequence profiles and neural networks. Proc. Natl. Acad. Sci. U.S.A., 90, 7558-7562. 
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8356056' target='_blank'>8356056</a><br>
+			Rost B, Casadio R, Fariselli P, Sander C (1995) <br>Transmembrane helices predicted at 95&#37; accuracy. Protein Sci, 4, 3, 521-533.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7795533' target='_blank'>7795533</a><br>
+			Combet C, Blanchet C, Geourjon C, Del&eacute;age G (2000) <br>NPS&#64;: Network Protein Sequence Analysis. TIBS 2000, 3, 291, 147-150.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10694887' target='_blank'>10694887</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and artificial neural network (NN) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>Philius</span></td>
+		<td align=left valign=top>
+			Philius<br>
+			<a href='http://www.yeastrc.org/philius/pages/philius/uploadFASTA.jsp' target='_blank'>http://www.yeastrc.org/philius/pages/philius/uploadFASTA.jsp</a><br>
+			<a href='http://www.yeastrc.org/philius/pages/philius/runPhilius.jsp' target='_blank'>http://www.yeastrc.org/philius/pages/philius/runPhilius.jsp</a><br>
+			Reynolds SM, K&auml;ll L, Riffle ME, Bilmes JA, Noble WS (2008) <br>Transmembrane topology and signal peptide prediction using dynamic bayesian networks. PLoS Comput Biol, 4, 11, e1000213.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18989393' target='_blank'>18989393</a><br>
+			<span class='blue_italic_smaller'>(uses dynamic Bayesian network trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>Phobius</span></td>
+		<td align=left valign=top>
+			Phobius<br>
+			<a href='http://phobius.cgb.ki.se' target='_blank'>http://phobius.cgb.ki.se</a><br>
+			K&auml;ll L, Krogh A, Sonnhammer ELL (2004) <br>A Combined Transmembrane Topology and Signal Peptide Prediction Method. J Mol Biol, 14, 5, 1027-1036.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15111065' target='_blank'>15111065</a><br>
+			K&auml;ll L, Krogh A, Sonnhammer EL (2007) <br>Advantages of combined transmembrane topology and signal peptide prediction--the Phobius web server. Nucleic Acids Res, 35, Web Server issue, W429-432.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=17483518' target='_blank'>17483518</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>PolyPhobs</span></td>
+		<td align=left valign=top>
+			PolyPhobius<br>
+			<a href='http://phobius.sbc.su.se/poly.html' target='_blank'>http://phobius.sbc.su.se/poly.html</a><br>
+			K&auml;ll L, Krogh A, Sonnhammer ELL (2005) <br>An HMM posterior decoder for sequence feature prediction that includes homology information. Bioinformatics, 21, Suppl 1, i251-257.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15961464' target='_blank'>15961464</a><br>
+			K&auml;ll L, Krogh A, Sonnhammer EL (2007) <br>Advantages of combined transmembrane topology and signal peptide prediction--the Phobius web server. Nucleic Acids Res, 35, Web Server issue, W429-432.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=17483518' target='_blank'>17483518</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov model (HMM) trained on membrane protein sequences and sequence alignment of membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>PRED-TMR</span></td>
+		<td align=left valign=top>
+			PRED-TMR<br>
+			<a href='http://athina.biol.uoa.gr/PRED-TMR/input.html' target='_blank'>http://athina.biol.uoa.gr/PRED-TMR/input.html</a><br>
+			Pasquier C, Promponas VJ, Palaios GA, Hamodrakas JS, Hamodrakas SJ (1999) <br>A novel method for predicting transmembrane segments in proteins based on a statistical analysis of the SwissProt database: the PRED-TMR algorithm. Protein Engineering, 12, 381-385.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10360978' target='_blank'>10360978</a><br>
+			<span class='blue_italic_smaller'>(uses statistical analysis of protein database)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>proT</span></td>
+		<td align=left valign=top>
+			PRO-TMHMM (in the TOPCONS server)<br>
+			<a href='http://topcons.cbr.su.se/' target='_blank'>http://topcons.cbr.su.se/</a><br>
+			Viklund H, Elofsson A (2004) <br>Best alpha-helical transmembrane protein topology predictions are achieved using hidden Markov models and evolutionary information. Protein Sci, 13, 7, 1908-1917.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15215532' target='_blank'>15215532</a><br>
+			Bernsel A, Viklund H, Hennerdal A, Elofsson A (2009) <br>TOPCONS: consensus prediction of membrane protein topology. Nucleic Acids Research, Web Server Issue 37, W465-W468.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19429891' target='_blank'>19429891</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>prodivT</span></td>
+		<td align=left valign=top>
+			PRODIV-TMHMM (in the TOPCONS server)<br>
+			<a href='http://topcons.cbr.su.se/' target='_blank'>http://topcons.cbr.su.se/</a><br>
+			Viklund H, Elofsson A (2004) <br>Best alpha-helical transmembrane protein topology predictions are achieved using hidden Markov models and evolutionary information. Protein Sci, 13, 7, 1908-1917.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15215532' target='_blank'>15215532</a><br>
+			Bernsel A, Viklund H, Hennerdal A, Elofsson A (2009) <br>TOPCONS: consensus prediction of membrane protein topology. Nucleic Acids Research, Web Server Issue 37, W465-W468.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19429891' target='_blank'>19429891</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences and hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>SCAMPI</span></td>
+		<td align=left valign=top>
+			SCAMPI<br>
+			<a href='http://scampi.cbr.su.se/' target='_blank'>http://scampi.cbr.su.se/</a><br>
+			Bernsel A, Viklund H, Falk J, Lindahl E, von Heijne G, Elofsson A (2008) <br>Prediction of membrane-protein topology from first principles. Proc. Natl. Acad. Sci. USA. 105, 7177-7181.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18477697' target='_blank'>18477697</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values and principles of translocon functioning)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>SCAMPImaT</span></td>
+		<td align=left valign=top>
+			SCAMPI-multi (multiple sequence alignment) (in the TOPCONS server)<br>
+			<a href='http://topcons.cbr.su.se/' target='_blank'>http://topcons.cbr.su.se/</a><br>
+			Bernsel A, Viklund H, Falk J, Lindahl E, von Heijne G, Elofsson A (2008) <br>Prediction of membrane-protein topology from first principles. Proc. Natl. Acad. Sci. USA. 105, 7177-7181.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18477697' target='_blank'>18477697</a><br>
+			Bernsel A, Viklund H, Hennerdal A, Elofsson A (2009) <br>TOPCONS: consensus prediction of membrane protein topology. Nucleic Acids Research, Web Server Issue 37, W465-W468.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19429891' target='_blank'>19429891</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences, biophysical residue hydropathy values and principles of translocon functioning)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>SCAMPIsqS</span></td>
+		<td align=left valign=top>
+			SCAMPI-sequence (in the TOPCONS-single server)<br>
+			<a href='http://single.topcons.net' target='_blank'>http://single.topcons.net</a><br>
+			Bernsel A, Viklund H, Falk J, Lindahl E, von Heijne G, Elofsson A (2008) <br>Prediction of membrane-protein topology from first principles. Proc. Natl. Acad. Sci. USA. 105, 7177-7181.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18477697' target='_blank'>18477697</a><br>
+			Hennerdal A, Elofsson A (2011) <br>Rapid membrane protein topology prediction. Bioinformatics 27, 9, 1322-1323.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=21493661' target='_blank'>21493661</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values and principles of translocon functioning)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>SCAMPIsqT</span></td>
+		<td align=left valign=top>
+			SCAMPI-sequence (in the TOPCONS server)<br>
+			<a href='http://topcons.cbr.su.se/' target='_blank'>http://topcons.cbr.su.se/</a><br>
+			Bernsel A, Viklund H, Falk J, Lindahl E, von Heijne G, Elofsson A (2008) <br>Prediction of membrane-protein topology from first principles. Proc. Natl. Acad. Sci. USA. 105, 7177-7181.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18477697' target='_blank'>18477697</a><br>
+			Hennerdal A, Elofsson A (2011) <br>Rapid membrane protein topology prediction. Bioinformatics 27, 9, 1322-1323.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=21493661' target='_blank'>21493661</a><br>
+			Bernsel A, Viklund H, Hennerdal A, Elofsson A (2009) <br>TOPCONS: consensus prediction of membrane protein topology. Nucleic Acids Research, Web Server Issue 37, W465-W468.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19429891' target='_blank'>19429891</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values and principles of translocon functioning)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>SOSUI</span></td>
+		<td align=left valign=top>
+			SOSUI<br>
+			<a href='http://bp.nuap.nagoya-u.ac.jp/sosui/sosuiG/sosuigsubmit.html' target='_blank'>http://bp.nuap.nagoya-u.ac.jp/sosui/sosuiG/sosuigsubmit.html</a><br>
+			Hirokawa T, Boon-Chieng S, Mitaku S (1998) <br>SOSUI: classification and secondary structure prediction system for membrane proteins. Bioinformatics, 14, 378-379.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=9632836' target='_blank'>9632836</a><br>
+			Mitaku S, Hirokawa T (1999) <br>Physicochemical factors for discriminating between soluble and membrane proteins: hydrophobicity of helical segments and protein length. Protein Engineering, 11, 953-957.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=10585500' target='_blank'>10585500</a><br>
+			Mitaku S, Hirokawa T, Tsuji T (2002) <br>Amphiphilicity index of polar amino acids as an aid in the characterization of amino acid preference at membrane-water interfaces. Bioinformatics, 18, 608-616.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=12016058' target='_blank'>12016058</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values and other physico-chemical properties)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>SPLIT4</span></td>
+		<td align=left valign=top>
+			SPLIT4<br>
+			<a href='http://split.pmfst.hr/split/4/' target='_blank'>http://split.pmfst.hr/split/4/</a><br>
+			Juretic D, Zoranic L, Zucic D (2002) <br>Basic charge clusters and predictions of membrane protein topology. Journal of Chemical Information and Modeling, 42, 620-632.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=12086524' target='_blank'>12086524</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values and other physico-chemical properties)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>stmhmmS</span></td>
+		<td align=left valign=top>
+			S-TMHMM (in the TOPCONS-single server)<br>
+			<a href='http://single.topcons.net' target='_blank'>http://single.topcons.net</a><br>
+			Viklund H, Elofsson A (2004) <br>Best alpha-helical transmembrane protein topology predictions are achieved using hidden Markov models and evolutionary information. Protein Sci, 13, 7, 1908-1917.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15215532' target='_blank'>15215532</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>SVMtm</span></td>
+		<td align=left valign=top>
+			SVMtm<br>
+			<a href='http://ccb.imb.uq.edu.au/svmtm/' target='_blank'>http://ccb.imb.uq.edu.au/svmtm/</a><br>
+			Yuan Z, Mattick JS, Teasdale RD (2004) <br>SVMtm: Support vector machines to predict transmembrane segments. Journal of Computational Chemistry, 25, 632-636.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=14978706' target='_blank'>14978706</a><br>
+			<span class='blue_italic_smaller'>(uses support vector machine (SVM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>SVMtop</span></td>
+		<td align=left valign=top>
+			SVMtop<br>
+			<a href='http://bio-cluster.iis.sinica.edu.tw/~bioapp/SVMtop/' target='_blank'>http://bio-cluster.iis.sinica.edu.tw/~bioapp/SVMtop/</a><br>
+			Lo A, Chiu HS, Sung TY, Lyu PC, Hsu WL (2008) <br>Enhanced membrane protein topology prediction using a hierarchical classification method and a new scoring function. J Proteome Res. 7, 2, 487-496.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=18081245' target='_blank'>18081245</a><br>
+			<span class='blue_italic_smaller'>(uses support vector machine (SVM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>TMAP</span></td>
+		<td align=left valign=top>
+			EMBOSS TMAP<br>
+			ftp://emboss.open-bio.org/pub/EMBOSS/EMBOSS-6.4.0.tar.gz (TMAP was run without any sequence alignment inputs.)<br>
+			Persson B, Argos P (1994) <br>Prediction of transmembrane segments in proteins utilising multiple sequence alignments. Journal of Molecular Biology, 237, 182-192.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8126732' target='_blank'>8126732</a><br>
+			Persson B, Argos P (1996) <br>Topology prediction of membrane proteins. Protein Science, 5, 363-371.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=8745415' target='_blank'>8745415</a><br>
+			<span class='blue_italic_smaller'>(uses sequence alignment of membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>TMHMM2</span></td>
+		<td align=left valign=top>
+			TMHMM Server v. 2.0<br>
+			<a href='http://www.cbs.dtu.dk/services/TMHMM/' target='_blank'>http://www.cbs.dtu.dk/services/TMHMM/</a><br>
+			Sonnhammer ELL, von Heijne G, Krogh A (1998) <br>A hidden Markov model for predicting transemembrane helices in protein sequences. Proceeding of Sixth International Conference on Intelligent Systems for Molecular Biology, <br>Vol. 5, AAAI/MIT Press, Menlo Park, CA, pp. 175-182.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=9783223' target='_blank'>9783223</a><br>
+			Krogh A, Larsson B, von Heijne G, Sonnhammer ELL (2001) <br>Predicting transmembrane protein topology with a hidden Markov model: application to complete genomes. Journal of Molecular Biology, 305, 567-580.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=11152613' target='_blank'>11152613</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>TMLOOP</span></td>
+		<td align=left valign=top>
+			TMLOOP<br>
+			<a href='http://membraneproteins.swan.ac.uk/TMLOOP' target='_blank'>http://membraneproteins.swan.ac.uk/TMLOOP</a><br>
+			Lasso G, Antoniw JF, Mullins JGL (2006) <br>A combinatorial pattern discovery approach for the prediction of membrane dipping (re-entrant) loops. Bioinformatics 22, 14, e290-e297.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=16873484' target='_blank'>16873484</a><br>
+			<span class='blue_italic_smaller'>(uses combinatorial pattern discovery trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>TMMOD</span></td>
+		<td align=left valign=top>
+			TMMOD<br>
+			<a href='http://liao.cis.udel.edu/website/servers/TMMOD/' target='_blank'>http://liao.cis.udel.edu/website/servers/TMMOD/</a><br>
+			Kahsay RY, Gao G, Liao L (2005) <br>An improved hidden Markov model for transmembrane protein detection and topology prediction and its applications to complete genomes. Bioinformatics, 21, 9, 1853-1858.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15691854' target='_blank'>15691854</a><br>
+			<span class='blue_italic_smaller'>(uses hidden Markov model (HMM) trained on membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>TMPRED</span></td>
+		<td align=left valign=top>
+			TMPRED<br>
+			<a href='http://www.ch.embnet.org/software/TMPRED_form.html' target='_blank'>http://www.ch.embnet.org/software/TMPRED_form.html</a><br>
+			Hofmann K, Stoffel W (1993) <br>TMbase - a database of membrane spanning proteins segments. Biological Chemistry Hoppe-Seyler, 374, 166.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=' target='_blank'></a><br>
+			<span class='blue_italic_smaller'>(uses statistical analysis of protein database)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>TOPCONS</span></td>
+		<td align=left valign=top>
+			TOPCONS<br>
+			<a href='http://topcons.cbr.su.se/' target='_blank'>http://topcons.cbr.su.se/</a><br>
+			Bernsel A, Viklund H, Hennerdal A, Elofsson A (2009) <br>TOPCONS: consensus prediction of membrane protein topology. Nucleic Acids Research, Web Server Issue 37, W465-W468.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19429891' target='_blank'>19429891</a><br>
+			<span class='blue_italic_smaller'>(uses consensus of results of other prediction methods and sequence alignment of membrane protein sequences)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>TOPCONSs</span></td>
+		<td align=left valign=top>
+			TOPCONS-single<br>
+			<a href='http://single.topcons.net/' target='_blank'>http://single.topcons.net/</a><br>
+			Hennerdal A, Elofsson A (2011) <br>Rapid membrane protein topology prediction. Bioinformatics 27, 1322-1323.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=21493661' target='_blank'>21493661</a><br>
+			Bernsel A, Viklund H, Hennerdal A, Elofsson A (2009) <br>TOPCONS: consensus prediction of membrane protein topology. Nucleic Acids Research, Web Server Issue 37, W465-W468.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=19429891' target='_blank'>19429891</a><br>
+			<span class='blue_italic_smaller'>(uses consensus of results of other prediction methods)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>TOPPRED2</span></td>
+		<td align=left valign=top>
+			TOPPRED2<br>
+			ftp://ftp.pasteur.fr/pub/gensoft/projects/toppred/toppred-1.10.tar.gz<br>
+			von Heijne G (1992) <br>Membrane protein structure prediction, hydrophobicity analysis and the positive-inside rule. Journal of Molecular Biology, 225, 487-494.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=1593632' target='_blank'>1593632</a><br>
+			Claros MG, von Heijne G (1994) <br>TopPred II: an improved software for membrane protein structure predictions. Comput Appl Biosci. 10, 6, 685-686.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=7704669' target='_blank'>7704669</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values and other physico-chemical properties)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>VALPRED</span></td>
+		<td align=left valign=top>
+			VALPRED<br>
+			<a href='http://sydney.edu.au/pharmacy/sbio/software/valpred.shtml' target='_blank'>http://sydney.edu.au/pharmacy/sbio/software/valpred.shtml</a> algorithm=VALPRED<br>
+			(publication in preparation)<br>
+			<span class='blue_italic_smaller'>(uses threading and biophysical residue hydropathy values and solvent accessible surface area)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>VALPRED2</span></td>
+		<td align=left valign=top>
+			VALPRED2<br>
+			<a href='http://sydney.edu.au/pharmacy/sbio/software/valpred.shtml' target='_blank'>http://sydney.edu.au/pharmacy/sbio/software/valpred.shtml</a> algorithm=VALPRED2<br>
+			(publication in preparation)<br>
+			<span class='blue_italic_smaller'>(uses threading and biophysical residue hydropathy values and solvent accessible surface area)</span><br>
+		</td>
+	</tr>
+	<tr>
+		<td align=left valign=top><span class='tt'>waveTM</span></td>
+		<td align=left valign=top>
+			waveTM<br>
+			<a href='http://bioinformatics.biol.uoa.gr/waveTM' target='_blank'>http://bioinformatics.biol.uoa.gr/waveTM</a><br>
+			Pashou EE, Litou ZI, Liakopoulos TD, Hamodrakas SJ (2004) <br>waveTM: wavelet-based transmembrane segment prediction. In Silico Biol, 4, 2, 127-131.
+			PMID <a href='http://www.ncbi.nlm.nih.gov/pubmed?term=15107018' target='_blank'>15107018</a><br>
+			<span class='blue_italic_smaller'>(uses biophysical residue hydropathy values and dynamic programming algorithm)</span><br>
+		</td>
+	</tr>
+</table>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+</div>
+
+<br><br>
+
+<a name='source_code'>
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+<span class='h1'>SOURCE CODE :</span>
+					</td>
+					<td width=10></td>
+					<td align=left valign=top>
+<a href='benchmark_pl.txt'>benchmark_pl.txt</a><br>
+					</td>
+				</tr>
+				<tr>
+					<td align=left valign=top>
+Archive file of data and server files :
+					</td>
+					<td></td>
+					<td align=left valign=top>
+<a href='benchmark.tgz'>benchmark.tgz</a><br>
+					</td>
+				</tr>
+				<tr>
+					<td align=left valign=top>
+					</td>
+					<td></td>
+					<td align=left valign=top>
+(To unarchive the archived file, copy to Linux operating system and type the following : tar -xvf benchmark.tgz )
+					</td>
+				</tr>
+				<tr>
+					<td align=left valign=top>
+<span class='h1'>CONTACT :</span>
+					</td>
+					<td width=10></td>
+					<td align=left valign=top>
+erat8805 AT uni . sydney . edu . au</a><br>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+<table cellspacing=0 cellpadding=0 border=1 bgcolor='#eeeeee'>
+	<tr>
+		<td>
+			<table cellspacing=10 cellpadding=0 border=0>
+				<tr>
+					<td align=left valign=top>
+
+<span class='h1'>COPYRIGHT :</span><br>
+Copyright &copy; 2012 Emma M. Rath. All rights reserved.<br>
+
+Soon this program will be released under an open source software license such as GNU General Public License or<br>
+Creative Commons license for Free Software Foundation's GNU General Public License at creativecommons.org<br>
+
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+
+<br><br>
+
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>

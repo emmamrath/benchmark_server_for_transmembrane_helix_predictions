@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+
+# python expand_segments_as_MMMMMM_seq_min_length.py 10 alpha_polytopic_bitopic_noblanks.1line.pepinfo_segments.pepinfo_kyte_7_0.adjusted_for_removed_blanks alpha_polytopic_bitopic.pepinfo_kyte_7_10
+
+# python expand_segments_as_MMMMMM_seq_min_length.py [min-length] [input-file] [output-file]
+
+import sys
+import re
+
+
+# global variables
+
+
+######################################################
+def is_valid_resn( this_char ):
+	is_valid = 0
+	for this_resn in resn_list_1char:
+		if (this_resn == this_char):
+			is_valid = 1
+	return is_valid
+
+######################################################
+def main():
+
+	global outfile
+	input_min_length = int(sys.argv[1])
+	input_file_1 = sys.argv[2]
+	output_file_name = sys.argv[3]
+
+	infile1 = open( input_file_1, "r" )
+	inlines1 = infile1.readlines()
+	infile1.close()
+
+	outfile = open( output_file_name, "w" )
+
+	for inline in inlines1:
+		inline = inline.strip()
+		if (inline != ''):
+			bits = inline.rsplit( ':::::' )
+			this_id = bits[0]
+			this_seq = bits[1]
+			this_segments = bits[2]
+			output_seq = '-'
+			output_seq_array = []
+			#print this_id, len(this_seq)
+			if (this_segments != '-'):
+				output_seq = ''
+				for i in range( 0, len(this_seq) ):
+					output_seq_array.append( '_' )
+				bits2 = this_segments.rsplit( ',' )
+				for this_segment in bits2:
+					if (this_segment != ''):
+						this_segment = this_segment.replace( '--', '-' )
+						if (this_segment[0:1] == '-'):
+							this_segment = this_segment[1:]
+						bits3 = this_segment.rsplit( '-' )
+						this_from = bits3[0]
+						this_to = bits3[1]
+						this_from = int(this_from)
+						this_to = int(this_to)
+						#print '     ', this_from, this_to
+						this_length = this_to - this_from + 1
+						if (this_length >= input_min_length):
+							for j in range( (this_from - 1), this_to ):
+								output_seq_array[j] = 'M'
+				for i in range( 0, len(this_seq) ):
+					output_seq = output_seq + output_seq_array[i]
+			if ((output_seq == '_') or (output_seq == '')):
+				output_seq = '-'
+			output_line = this_id + ":::::" + output_seq + ":::::" + "\r\n"
+			outfile.write( output_line )
+	outfile.close()
+
+
+if __name__ == "__main__":
+	# Someone is launching this directly
+	main()
+
